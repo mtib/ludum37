@@ -7,6 +7,7 @@ Dieses Jahr wäre das Vorgehen wie folgt:
 ## Ablauf
 
 ### Samstag 10.12.2016
+
 | Uhrzeit | Event |
 | :-----: | :---- |
 | 03:00   | Bekanntmachung des Themas |
@@ -15,17 +16,20 @@ Dieses Jahr wäre das Vorgehen wie folgt:
 | 22:00   | Treffen im TS mit allen (für Tag 2) |
 
 ### Sontag 11.12.2016
+
 | Uhrzeit | Event |
 | :-----: | :---- |
 | 13:00   | Treffen im TS: Tagesplan |
 | bis 22:00 | Finalisierung des Spiels |
 
 ### Montag 12.12.2016
+
 | Uhrzeit | Event |
 | :-----: | :---- |
 | 16:00 | Markus stellt das Spiel ein |
 
 ## Teilnehmer
+
 | Teilnehmer | Anwesend | Aufgabe |
 | :--------- | :------: | :------ |
 | Markus    | Sa & So   | Programmierer |
@@ -50,6 +54,7 @@ Das Spiel wird dann entweder auf github.io oder \*.tibyte.net veröffentlicht.
 - (Dropbox / FTP wenn nötig)
 
 ## Technologie
+
 | Zweck     | Tool |
 | :-------- | :--- |
 | Portal    | HTML5 |
