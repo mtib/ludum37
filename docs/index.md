@@ -37,6 +37,7 @@ Dieses Jahr wäre das Vorgehen wie folgt:
 | Aileen    | Sa & So   | Designerin |
 | Lucas     | (Sa &) So | Programmierer |
 | sonstige  | ...       | Brainstormer |
+
 natürlich sind wir alle auch *Brainstormer*.
 
 ## Deployment
