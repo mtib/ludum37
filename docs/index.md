@@ -41,15 +41,19 @@ Dieses Jahr wäre das Vorgehen wie folgt:
 natürlich sind wir alle auch *Brainstormer*.
 
 ## Deployment
+
 Entwickelt wird auf [github](https://github.com/mtib/ludum37).
 Das Spiel wird dann entweder auf github.io oder \*.tibyte.net veröffentlicht.
 
 ## Kommunikation
+
 ### Voice Chat:
+
 - Teamspeak (siehe WhatsApp)
 - Discord (Markus kontaktieren)
 
 ### Dateiaustausch
+
 - Teamspeak
 - Discord
 - (Dropbox / FTP wenn nötig)
