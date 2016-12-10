@@ -30,10 +30,10 @@ var GAME = (function(){
     var gameStage = new PIXI.Container();
     var menuStage = new PIXI.Container();
     var confStage = new PIXI.Container();
-    var scale = {x: 1, y: 1};
     var backwall = HEIGHT / 5.1;
     return {
         mode: "SETUP",
+        gameobjects: [],
         switch_to: function(newMode) {
             // destroying what needs to be destroyed
             DATA.stop_all();
@@ -65,15 +65,36 @@ var GAME = (function(){
                     var bg = getTexture("bg");
                     bg.width = WIDTH;
                     bg.height = HEIGHT;
+                    bg.position.set(HCENTER, HEIGHT);
                     this.scale = {x: bg.scale.x, y: bg.scale.y};
+
                     var door = getTexture("bossdoor");
-                    door.scale = this.scale;
-                    door.anchor.set(0.5,1);
                     door.position.y = backwall;
                     door.position.x = HCENTER*1.65;
+                    this.enterp = POINTS.fromAbs(door.position.x, door.position.y);
 
-                    let toadd = [bg, door];
+                    var ticket = getTexture("cardthing");
+                    ticket.position.y = backwall - this.scale.y * 22;
+                    ticket.position.x = door.position.x - this.scale.x * 80;
+
+                    var shelf = getTexture("shelf");
+                    shelf.position.y = backwall + this.scale.y * 12;
+                    shelf.position.x = HCENTER/2;
+
+                    var plant1 = getTexture("plant");
+                    plant1.position.y = backwall + this.scale.y * 5;
+                    plant1.position.x = HCENTER - this.scale.x * 10;
+
+                    var plant2 = getTexture("plant");
+                    plant2.position.y = VCENTER;
+                    plant2.position.x = WIDTH - this.scale.x * 20;
+
+
+                    this.gameobjects = [bg, door, ticket, shelf, plant1, plant2];
+                    let toadd = this.gameobjects;
                     for (var i in toadd) {
+                        toadd[i].scale = this.scale;
+                        toadd[i].anchor.set(0.5,1);
                         gameStage.addChild(toadd[i]);
                     }
                     break;
