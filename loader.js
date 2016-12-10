@@ -11,7 +11,7 @@ var GAME = (function(){
     var menuStage = new PIXI.Container();
     var confStage = new PIXI.Container();
     return {
-        mode: "MODE",
+        mode: "SETUP",
         switch_to: function(newMode) {
             // destroying what needs to be destroyed
             switch (this.mode) {
@@ -29,6 +29,7 @@ var GAME = (function(){
             }
             stage.addChild(this.getStage(newMode));
 
+            cons("changed from mode ["+this.mode+"] to ["+newMode+"]");
             this.mode = newMode;
             return true;
         },
