@@ -41,3 +41,14 @@ var KEY = (function() {
 
     return obj;
 })();
+
+// Define keys
+KEY.add(KEY.w);
+KEY.add(KEY.a);
+KEY.add(KEY.s);
+KEY.add(KEY.d);
+KEY.add(KEY.up);
+KEY.add(KEY.down);
+KEY.add(KEY.right);
+KEY.add(KEY.left);
+KEY.add(KEY.e);

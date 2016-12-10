@@ -66,8 +66,14 @@ function Player(x, y) {
     this.pos = POINTS.fromAbs(x, y);
 
     this.sprite = getTexture("heroF1");
+    this.sprites = [["heroF1", "heroF2"], ["heroB1", "heroB2"], ["heroS1", "heroS2"]]
+        .map(function(a){a.map(getTexture)});
     this.speed = .1;
     this.persfac = .8;
+
+    KEY.add(KEY.e, function() {
+        cons(this.sprites);
+    }.bind(this));
 
     isDown = function(key) {
         return KEY.isDown(KEY[key]);
@@ -81,6 +87,7 @@ function Player(x, y) {
     this.update = function() {
         this.sprite.position.set(this.pos.x, this.pos.y);
         if (isDown("a")) {
+            this.sprite = getTexture()
             this.pos.x -= deltaT * this.speed * GAME.scale.x;
         } else if (isDown("d")) {
             this.pos.x += deltaT * this.speed * GAME.scale.x;
