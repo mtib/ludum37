@@ -87,3 +87,32 @@ var GAME = (function(){
         conf: "CONFIG"
     };
 })();
+
+
+POINTS = (function() {
+    function Point(x, y) {
+        this.x = x;
+        this.y = y;
+        this.diff = function(p2) {
+            return new Point(p2.x - this.x, p2.y - this.y);
+        };
+        this.length = function() {
+            return Math.sqrt(Math.pow(this.x,2) + Math.pow(this.y,2));
+        }
+        this.dist = function(p2) {
+            return this.diff(p2).length();
+        }
+    }
+    return {
+        ZERO: new Point(0,0),
+        fromRel: function(rx, ry) {
+            return new Point(rx*WIDTH, ry*HEIGHT);
+        },
+        fromAbs: function(x, y) {
+            return new Point(x, y);
+        },
+        dist: function(p1, p2) {
+            return p1.dist(p2);
+        }
+    }
+})();
