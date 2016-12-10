@@ -13,6 +13,8 @@ function setup(loader, resources) {
 
     gameloop(null);
 }
+// Just play the music for now
+DATA.play("office");
 
 function gameloop(timestamp) {
     if (!lastTS) lastTS = timestamp;
