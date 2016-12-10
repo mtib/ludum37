@@ -5,7 +5,7 @@ var KEYS = [];
 var KEY = (function() {
     let obj = {
         left: 37, up: 38, right: 39, down: 40,
-        a: 65, d: 68, s: 83, w: 87,
+        a: 65, d: 68, s: 83, w: 87, e: 69,
         add: function(keycode, keyUp) {
             let key = {};
             key.isDown = false;

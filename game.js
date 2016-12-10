@@ -5,7 +5,6 @@
 // GLOBALS
 var lastTS = null;
 var deltaT = 0;
-var RESOURCES = null;
 
 // CALLED AFTER LOADING
 DATA.run(setup);
