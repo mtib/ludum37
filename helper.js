@@ -1,6 +1,11 @@
 function cons( str ) {
     console.log( str );
 }
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.floor(Math.random() * (max - min)) + min);
+}
+
 var KEYS = [];
 var KEY = (function() {
     let obj = {
