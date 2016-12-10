@@ -235,15 +235,25 @@ var GAME = (function(){
                     this.enterp = POINTS.fromAbs(door.position.x, door.position.y);
 
                     this.clock = {};
-                    this.clock.hours = newText("5", null, 20, 0x2EAA01);
-                    this.clock.minutes = newText("00", null, 20, 0x2EAA01);
+                    this.clock.hours = newText("", null, 20, 0x2EAA01);
+                    this.clock.minutes = newText("", null, 20, 0x2EAA01);
                     this.clock.hours.position.set(rtax(.649), rtay(.065));
                     this.clock.minutes.position.set(rtax(.665), rtay(.065));
 
                     this.clock.setTime = function(hours, minutes) {
-                        this.hours.text = hours;
+                        this.time = hours*60+minutes;
+                        this.hours.text = hours.toString();
                         this.minutes.text = ('0'+minutes).slice(-2);
                     }
+                    this.clock.setTime(0, 0);
+                    this.clock.add = function(minutes) {
+                        this.time += minutes;
+                        this.minutes.text = ('0'+this.time % 60).slice(-2);
+                        this.hours.text = Math.floor(this.time/60).toString();
+                    }
+                    window.setInterval(function(){
+                        this.add(1);
+                    }.bind(this.clock), 1000);
 
                     var ticket = getTexture("cardthing");
                     ticket.position.y = backwall - this.scale.y * 22;
