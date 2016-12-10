@@ -16,6 +16,7 @@ All times are UTC+1
 ### Sunday 11.12.2016
 
 | Time | Item |
+| ---- | ---- |
 | 13:00 | meeting in teamspeak |
 | 22:00 | feature freeze |
 
