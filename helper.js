@@ -12,7 +12,7 @@ var KEY = (function() {
             key.isUp = true;
             key.keyUp = keyUp;
 
-            KEYS[keyCode] = key;
+            KEYS[keycode] = key;
         },
         isUp: function(key) {
             return KEYS[key].isUp;
@@ -21,22 +21,22 @@ var KEY = (function() {
             return KEYS[key].isDown;
         }
     };
-    window.addEventListener("keydown", function() {
-        let key = KEYS[event.keyCode];
+    window.addEventListener("keydown", function(e) {
+        let key = KEYS[e.keyCode];
         if (key) {
             key.isDown = true;
             key.isUp = false;
         }
-        event.preventDefault();
+        e.preventDefault();
     }, false);
-    window.addEventListener("keyup", function() {
-        let key = KEYS[event.keyCode];
+    window.addEventListener("keyup", function(e) {
+        let key = KEYS[e.keyCode];
         if (key) {
             if (key.keyUp) key.keyUp();
             key.isUp = true;
             key.isDown = false;
         }
-        event.preventDefault();
+        e.preventDefault();
     }, false);
 
     return obj;
