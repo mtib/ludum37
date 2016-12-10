@@ -5,7 +5,8 @@ var HEIGHT = 720;
 var VCENTER = HEIGHT/2;
 var HCENTER = WIDTH/2;
 
-var renderer = new PIXI.WebGLRenderer(WIDTH, HEIGHT);
+var renderer = new PIXI.WebGLRenderer(WIDTH, HEIGHT, { antialias: false } );
+PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 var divContainer = document.getElementById("container");
 divContainer.appendChild(renderer.view);
 
@@ -53,6 +54,7 @@ var GAME = (function(){
             stage.addChild(this.getStage(newMode));
 
             cons("changed from mode ["+this.mode+"] to ["+newMode+"]");
+            DATA.stop_all();
             this.mode = newMode;
             return true;
         },
