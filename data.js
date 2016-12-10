@@ -11,6 +11,9 @@ var DATA = (function() {
         add: function(img, name) {
             IMAGES[IMAGES.length]=[img,name];
         },
+        add_simple: function(sname) {
+            this.add(sname+".png", sname);
+        },
         add_music: function(file, name) {
             MUSICS[name] = new Howl({
                 src: [music_prefix+file+'.ogg', music_prefix+file+'.mp3'],
@@ -48,7 +51,21 @@ var DATA = (function() {
     };
 })();
 
-DATA.add("office.png", "office");
+DATA.add_simple("office");
+DATA.add_simple("bg");
+DATA.add_simple("cardthing");
+DATA.add_simple("fridge");
+DATA.add_simple("printer");
+DATA.add_simple("tabelH");
+DATA.add_simple("tabelV");
+DATA.add_simple("trashcan");
+DATA.add_simple("wallH");
+DATA.add_simple("wallV");
+DATA.add_simple("bossdoor");
+DATA.add_simple("example");
+DATA.add_simple("plant");
+DATA.add_simple("shelf");
+DATA.add_simple("vase");
 
 DATA.add_music("TheOfficeMain", "office");
 DATA.add_music("Boss_Theme", "boss");
