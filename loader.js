@@ -140,6 +140,17 @@ var GAME = (function(){
                     door.position.x = HCENTER*1.65;
                     this.enterp = POINTS.fromAbs(door.position.x, door.position.y);
 
+                    this.clock = {};
+                    this.clock.hours = newText("5", null, "sans-serif", 20, 0x2EAA01);
+                    this.clock.minutes = newText("00", null, "sans-serif", 20, 0x2EAA01);
+                    this.clock.hours.position.set(rtax(.649), rtay(.0632));
+                    this.clock.minutes.position.set(rtax(.665), rtay(.0632));
+
+                    this.clock.setTime = function(hours, minutes) {
+                        this.hours.text = hours;
+                        this.minutes.text = ('0'+minutes).slice(-2);
+                    }
+
                     var ticket = getTexture("cardthing");
                     ticket.position.y = backwall - this.scale.y * 22;
                     ticket.position.x = door.position.x - this.scale.x * 80;
@@ -218,6 +229,8 @@ var GAME = (function(){
                         gameStage.addChild(toadd[i]);
                     }
                     toadd.pop();
+                    gameStage.addChild(this.clock.hours);
+                    gameStage.addChild(this.clock.minutes);
                     GAME.player.postfix();
                     break;
                 default:
