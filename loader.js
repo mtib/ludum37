@@ -30,6 +30,7 @@ var GAME = (function(){
         mode: "SETUP",
         switch_to: function(newMode) {
             // destroying what needs to be destroyed
+            DATA.stop_all();
             switch (this.mode) {
                 default:
                     break;
@@ -47,14 +48,13 @@ var GAME = (function(){
                         menuStage.addChild(start_btn);
                         menuStage.addChild(setting_btn);
                     }
-                    DATA.play("office");
+                    DATA.play("menu");
                 default:
                     break;
             }
             stage.addChild(this.getStage(newMode));
 
             cons("changed from mode ["+this.mode+"] to ["+newMode+"]");
-            DATA.stop_all();
             this.mode = newMode;
             return true;
         },
