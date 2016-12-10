@@ -11,7 +11,7 @@ var DATA = (function() {
         },
         add_music: function(file, name) {
             MUSICS[name] = new Howl({
-                src: [music_prefix+file+'.mp3', music_prefix+file+'.ogg'],
+                src: [music_prefix+file+'.ogg', music_prefix+file+'.mp3'],
                 loop: true,
                 volume: 0.4
             });
