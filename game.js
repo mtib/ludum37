@@ -28,6 +28,11 @@ function gameloop(timestamp) {
 function handle() {
     switch ( GAME.mode ) {
         case GAME.menu:
+            drawMenu();
             break;
     }
+}
+
+function drawMenu() {
+
 }

@@ -1,10 +1,25 @@
 // CALLED BEFORE GAME, AFTER DATA/HELPER
+var WIDTH = 1280;
+var HEIGHT = 720;
 
-var renderer = new PIXI.WebGLRenderer(1280, 720);
+var VCENTER = HEIGHT/2;
+var HCENTER = WIDTH/2;
+
+var renderer = new PIXI.WebGLRenderer(WIDTH, HEIGHT);
 var divContainer = document.getElementById("container");
 divContainer.appendChild(renderer.view);
 
 var stage = new PIXI.Container();
+
+function newText( text, callback=null, font="sans-serif", size=24, fill=0xFFFFFF, align="center", click=null) {
+    let tmp = new PIXI.Text(text, {fontFamily: font, fontSize: size, fill: fill, align: align});
+    tmp.anchor.set(0.5, 0.5);
+    if ( callback !== null ) {
+        tmp.interactive = true;
+        tmp.click = callback;
+    }
+    return tmp;
+}
 
 var GAME = (function(){
     var gameStage = new PIXI.Container();
@@ -23,6 +38,14 @@ var GAME = (function(){
             // build what needs to be built
             switch (newMode) {
                 case this.menu:
+                    if (menuStage.children.length == 0) {
+                        var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)});
+                        var setting_btn = newText("Settings");
+                        start_btn.position.set(HCENTER, VCENTER);
+                        setting_btn.position.set(HCENTER, VCENTER+50);
+                        menuStage.addChild(start_btn);
+                        menuStage.addChild(setting_btn);
+                    }
                     DATA.play("office");
                 default:
                     break;

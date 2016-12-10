@@ -26,7 +26,7 @@ var DATA = (function() {
         },
         get_sound: function(name) {
             return SOUNDS[name]
-        }
+        },
         play: function(name) {
             MUSICS[name].play();
         },
