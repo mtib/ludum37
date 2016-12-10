@@ -65,9 +65,7 @@ POINTS = (function() {
 function Player(x, y) {
     this.pos = POINTS.fromAbs(x, y);
 
-    this.sprites = ["heroF1", "heroF2", "heroB1", "heroB2", "heroS1", "heroS2"]
-        .map(getTexture);
-    this.sprite = this.sprites[0];
+    this.sprite = getTexture("heroF1");
     this.speed = .1;
     this.persfac = .8;
 
