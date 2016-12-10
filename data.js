@@ -9,7 +9,7 @@ var DATA = (function() {
         run: function(callback) {
             let loader = PIXI.loader;
             for ( let i = 0; i < IMAGES.length; i++ ){
-                loader = loader.add(prefix + IMAGES[i][0], IMAGES[i][0]);
+                loader = loader.add(prefix + IMAGES[i][0], IMAGES[i][1]);
             }
             loader.load(callback);
         }
