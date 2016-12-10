@@ -30,6 +30,8 @@ var GAME = (function(){
     var gameStage = new PIXI.Container();
     var menuStage = new PIXI.Container();
     var confStage = new PIXI.Container();
+    var scale = {x: 1, y: 1};
+    var backwall = HEIGHT / 5.1;
     return {
         mode: "SETUP",
         switch_to: function(newMode) {
@@ -47,7 +49,7 @@ var GAME = (function(){
                     if (menuStage.children.length == 0) {
                         var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)});
                         var setting_btn = newText("Settings");
-                        var bg = getTexture("example")
+                        var bg = getTexture("example");
                         bg.width = WIDTH;
                         bg.height = HEIGHT;
                         start_btn.position.set(HCENTER, VCENTER);
@@ -57,6 +59,24 @@ var GAME = (function(){
                         menuStage.addChild(setting_btn);
                     }
                     DATA.play("menu");
+                    break;
+                case this.game:
+                    gameStage.removeChildren();
+                    var bg = getTexture("bg");
+                    bg.width = WIDTH;
+                    bg.height = HEIGHT;
+                    this.scale = {x: bg.scale.x, y: bg.scale.y};
+                    var door = getTexture("bossdoor");
+                    door.scale = this.scale;
+                    door.anchor.set(0.5,1);
+                    door.position.y = backwall;
+                    door.position.x = HCENTER*1.65;
+
+                    let toadd = [bg, door];
+                    for (var i in toadd) {
+                        gameStage.addChild(toadd[i]);
+                    }
+                    break;
                 default:
                     break;
             }
