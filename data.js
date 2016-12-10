@@ -2,9 +2,11 @@
 // AND MUSIC WITH HOWLER
 var IMAGES = [];
 var MUSICS = [];
+var SOUNDS = [];
 var DATA = (function() {
     var prefix = "resources/";
     var music_prefix = "music/";
+    var sounds_prefix = "sounds/";
     return {
         add: function(img, name) {
             IMAGES[IMAGES.length]=[img,name];
@@ -16,6 +18,15 @@ var DATA = (function() {
                 volume: 0.4
             });
         },
+        add_sound: function(file, name) {
+            SOUNDS[name] = new Howl({
+                src: [sounds_prefix+file+'.ogg', sounds_prefix+file+'.mp3'],
+                volume: 0.4
+            })
+        },
+        get_sound: function(name) {
+            return SOUNDS[name]
+        }
         play: function(name) {
             MUSICS[name].play();
         },
