@@ -25,10 +25,12 @@ function Vase() {
     }
 }
 
-function ObjectType( health, imgname ) {
+function ObjectType( Mhealth, Mimgname ) {
+    // TODO make this a closure that works!
     return function() {
+        // TODO load image routine
         player = null;
-        health = 20; // seconds
+        health = Mhealth; // seconds
         // called every animation frame
         hide = function(dt) {
             health -= dt/1000.0;
