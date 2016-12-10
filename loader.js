@@ -22,6 +22,10 @@ function newText( text, callback=null, font="sans-serif", size=24, fill=0x000000
     return tmp;
 }
 
+function getTexture(name) {
+    return new PIXI.Sprite(PIXI.loader.resources[name].texture)
+}
+
 var GAME = (function(){
     var gameStage = new PIXI.Container();
     var menuStage = new PIXI.Container();
@@ -43,7 +47,7 @@ var GAME = (function(){
                     if (menuStage.children.length == 0) {
                         var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)});
                         var setting_btn = newText("Settings");
-                        var bg = new PIXI.Sprite(PIXI.loader.resources.example.texture);
+                        var bg = getTexture("example")
                         bg.width = WIDTH;
                         bg.height = HEIGHT;
                         start_btn.position.set(HCENTER, VCENTER);
