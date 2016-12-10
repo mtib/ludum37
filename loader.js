@@ -12,8 +12,8 @@ divContainer.appendChild(renderer.view);
 
 var stage = new PIXI.Container();
 
-function newText( text, callback=null, font="sans-serif", size=24, fill=0x000000, align="center", click=null) {
-    let tmp = new PIXI.Text(text, {fontFamily: font, fontSize: size, fill: fill, align: align});
+function newText( text, callback=null, size=24, fill=0x000000, font="VT323") {
+    let tmp = new PIXI.Text(text, {fontFamily: font, fontSize: size, fill: fill, align: "center"});
     tmp.anchor.set(0.5, 0.5);
     if ( callback !== null ) {
         tmp.interactive = true;
@@ -208,8 +208,8 @@ var GAME = (function(){
             switch (newMode) {
                 case this.menu:
                     if (menuStage.children.length == 0) {
-                        var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)});
-                        var setting_btn = newText("Settings");
+                        var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46);
+                        var setting_btn = newText("Settings", null, 46);
                         var bg = getTexture("example");
                         bg.width = WIDTH;
                         bg.height = HEIGHT;
@@ -235,10 +235,10 @@ var GAME = (function(){
                     this.enterp = POINTS.fromAbs(door.position.x, door.position.y);
 
                     this.clock = {};
-                    this.clock.hours = newText("5", null, "sans-serif", 20, 0x2EAA01);
-                    this.clock.minutes = newText("00", null, "sans-serif", 20, 0x2EAA01);
-                    this.clock.hours.position.set(rtax(.649), rtay(.0632));
-                    this.clock.minutes.position.set(rtax(.665), rtay(.0632));
+                    this.clock.hours = newText("5", null, 20, 0x2EAA01);
+                    this.clock.minutes = newText("00", null, 20, 0x2EAA01);
+                    this.clock.hours.position.set(rtax(.649), rtay(.065));
+                    this.clock.minutes.position.set(rtax(.665), rtay(.065));
 
                     this.clock.setTime = function(hours, minutes) {
                         this.hours.text = hours;

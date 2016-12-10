@@ -7,11 +7,12 @@ body {
     padding: 1em;
     background-color: #C9D4E4;
     text-align: center;
+    font-family: "VT323", monospace;
 }
 
 h1, h2, h3, p {
     text-align: center;
-    font-family: sans-serif;
+    font-family: "VT323", monospace;
 }
 
 p {
