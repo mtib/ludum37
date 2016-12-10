@@ -1,0 +1,14 @@
+pixijs*
+
+*.o
+*.a
+*.so
+
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
