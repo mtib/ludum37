@@ -44,14 +44,13 @@ var DATA = (function() {
         run: function(callback) {
             let loader = PIXI.loader;
             for ( let i = 0; i < IMAGES.length; i++ ){
-                loader = loader.add(prefix + IMAGES[i][0], IMAGES[i][1]);
+                loader.add(IMAGES[i][1], prefix + IMAGES[i][0]);
             }
             loader.load(callback);
         }
     };
 })();
 
-DATA.add_simple("office");
 DATA.add_simple("bg");
 DATA.add_simple("cardthing");
 DATA.add_simple("fridge");

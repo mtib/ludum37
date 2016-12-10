@@ -12,7 +12,7 @@ divContainer.appendChild(renderer.view);
 
 var stage = new PIXI.Container();
 
-function newText( text, callback=null, font="sans-serif", size=24, fill=0xFFFFFF, align="center", click=null) {
+function newText( text, callback=null, font="sans-serif", size=24, fill=0x000000, align="center", click=null) {
     let tmp = new PIXI.Text(text, {fontFamily: font, fontSize: size, fill: fill, align: align});
     tmp.anchor.set(0.5, 0.5);
     if ( callback !== null ) {
@@ -42,8 +42,12 @@ var GAME = (function(){
                     if (menuStage.children.length == 0) {
                         var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)});
                         var setting_btn = newText("Settings");
+                        var bg = new PIXI.Sprite(PIXI.loader.resources.example.texture);
+                        bg.width = WIDTH;
+                        bg.height = HEIGHT;
                         start_btn.position.set(HCENTER, VCENTER);
                         setting_btn.position.set(HCENTER, VCENTER+50);
+                        menuStage.addChild(bg);
                         menuStage.addChild(start_btn);
                         menuStage.addChild(setting_btn);
                     }
