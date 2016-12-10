@@ -326,6 +326,7 @@ var GAME = (function(){
                     gameStage.addChild(this.clock.hours);
                     gameStage.addChild(this.clock.minutes);
                     GAME.player.postfix();
+                    DATA.play("office");
                     break;
                 default:
                     break;
