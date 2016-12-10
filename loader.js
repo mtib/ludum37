@@ -7,18 +7,16 @@ divContainer.appendChild(renderer.view);
 var stage = new PIXI.Container();
 
 var GAME = (function(){
-    
-
     return {
         mode: "MODE",
         switch_to: function(newMode) {
             // destroying what needs to be destroyed
             switch (this.mode) {
-                
+
             }
             // build what needs to be built
             switch (newMode) {
-            
+
             }
             this.mode = newMode;
             return true;
