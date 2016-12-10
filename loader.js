@@ -89,8 +89,11 @@ var GAME = (function(){
                     plant2.position.y = VCENTER;
                     plant2.position.x = WIDTH - this.scale.x * 20;
 
+                    var vase = getTexture("vase");
+                    vase.position.y = VCENTER;
+                    vase.position.x = this.scale.x * 20;
 
-                    this.gameobjects = [bg, door, ticket, shelf, plant1, plant2];
+                    this.gameobjects = [bg, door, ticket, shelf, plant1, plant2, vase];
                     let toadd = this.gameobjects;
                     for (var i in toadd) {
                         toadd[i].scale = this.scale;

@@ -29,11 +29,15 @@ function gameloop(timestamp) {
 function handle() {
     switch ( GAME.mode ) {
         case GAME.menu:
-            drawMenu();
+            break;
+        case GAME.game:
+            gameUpdate();
             break;
     }
 }
 
-function drawMenu() {
-
+function gameUpdate() {
+    for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
+        // TODO check interaction
+    }
 }

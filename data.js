@@ -7,12 +7,18 @@ var DATA = (function() {
     var prefix = "resources/";
     var music_prefix = "music/";
     var sounds_prefix = "sounds/";
+    var extentions = ["B1", "B2", "F1", "F2", "S1", "S2"];
     return {
         add: function(img, name) {
             IMAGES[IMAGES.length]=[img,name];
         },
         add_simple: function(sname) {
             this.add(sname+".png", sname);
+        },
+        add_folder: function(sname) {
+            for (var i = 0; i < extentions.length; i++) {
+                this.add(sname+"/"+sname+extentions[i]+".png", sname+extentions[i]);
+            }
         },
         add_music: function(file, name) {
             MUSICS[name] = new Howl({
@@ -65,6 +71,9 @@ DATA.add_simple("example");
 DATA.add_simple("plant");
 DATA.add_simple("shelf");
 DATA.add_simple("vase");
+
+DATA.add_folder("coworker");
+DATA.add_folder("hero");
 
 DATA.add_music("TheOfficeMain", "office");
 DATA.add_music("Boss_Theme", "boss");
