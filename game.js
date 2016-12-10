@@ -40,4 +40,5 @@ function gameUpdate() {
     for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
         // TODO check interaction
     }
+    GAME.player.update();
 }
