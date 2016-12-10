@@ -51,3 +51,5 @@ var DATA = (function() {
 DATA.add("office.png", "office");
 
 DATA.add_music("TheOfficeMain", "office");
+DATA.add_music("Boss_Theme", "boss");
+DATA.add_music("Menu_Theme", "menu");
