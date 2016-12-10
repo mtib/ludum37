@@ -10,7 +10,7 @@ var KEYS = [];
 var KEY = (function() {
     let obj = {
         left: 37, up: 38, right: 39, down: 40,
-        a: 65, d: 68, s: 83, w: 87,
+        a: 65, d: 68, s: 83, w: 87, e: 69,
         add: function(keycode, keyUp) {
             let key = {};
             key.isDown = false;
@@ -46,3 +46,14 @@ var KEY = (function() {
 
     return obj;
 })();
+
+// Define keys
+KEY.add(KEY.w);
+KEY.add(KEY.a);
+KEY.add(KEY.s);
+KEY.add(KEY.d);
+KEY.add(KEY.up);
+KEY.add(KEY.down);
+KEY.add(KEY.right);
+KEY.add(KEY.left);
+KEY.add(KEY.e);
