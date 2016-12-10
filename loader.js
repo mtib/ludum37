@@ -129,6 +129,18 @@ var GAME = (function(){
     };
 })();
 
+function Player(x, y) {
+    this.pos = POINTS.fromAbs(x, y);
+    KEY.add(KEY.w);
+    KEY.add(KEY.a);
+    KEY.add(KEY.s);
+    KEY.add(KEY.d);
+
+    this.update = function() {
+        
+    }
+}
+
 
 POINTS = (function() {
     function Point(x, y) {

@@ -26,8 +26,8 @@ var KEY = (function() {
         if (key) {
             key.isDown = true;
             key.isUp = false;
+            e.preventDefault();
         }
-        e.preventDefault();
     }, false);
     window.addEventListener("keyup", function(e) {
         let key = KEYS[e.keyCode];
@@ -35,8 +35,8 @@ var KEY = (function() {
             if (key.keyUp) key.keyUp();
             key.isUp = true;
             key.isDown = false;
+            e.preventDefault();
         }
-        e.preventDefault();
     }, false);
 
     return obj;
