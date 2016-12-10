@@ -1,5 +1,6 @@
 pixi*
 howler*
+.*
 
 *.o
 *.a

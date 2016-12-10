@@ -11,10 +11,9 @@ DATA.run(setup);
 function setup(loader, resources) {
     cons("entered setup");
 
+    GAME.switch_to(GAME.menu);
     gameloop(null);
 }
-// Just play the music for now
-DATA.play("office");
 
 function gameloop(timestamp) {
     if (!lastTS) lastTS = timestamp;
@@ -28,7 +27,7 @@ function gameloop(timestamp) {
 
 function handle() {
     switch ( GAME.mode ) {
-    case GAME.menu:
-        break;
+        case GAME.menu:
+            break;
     }
 }
