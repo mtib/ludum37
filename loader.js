@@ -17,6 +17,7 @@ var GAME = (function(){
     return {
         mode: "SETUP",
         gameobjects: [],
+        gobj: function() { return gobj; },
         resetTimer: function() {
             counter = countermax;
         },
@@ -34,7 +35,8 @@ var GAME = (function(){
             gobj.destroy();
             gobj = new PIXI.Graphics();
             gobj.lineStyle(4,0xB2FF58);
-            this.getCurrentStage().addChild(gobj);
+            gobj.alpha = 0.9;
+            guiStage.addChild(gobj);
             return gobj;
         },
         pushGameObj: function(sprite) {
@@ -52,6 +54,7 @@ var GAME = (function(){
                 return this.getStage("GAME").children.length-1
             }
         },
+        headsup: newText("", 30),
         getBackY: function() { return backwall; },
         switch_to: function(newMode) {
             // destroying what needs to be destroyed
@@ -81,6 +84,11 @@ var GAME = (function(){
                     break;
                 case this.game:
                     gameStage.removeChildren();
+                    guiStage.addChild(this.headsup);
+                    this.headsup.style.dropShadow = true;
+                    this.headsup.style.dropShadowBlur = 10;
+                    this.headsup.style.dropShadowDistance = 2;
+                    this.headsup.style.fill = 0xFFFFFF;
                     gobj = new PIXI.Graphics();
                     var bg = getTexture("bg");
                     bg.width = WIDTH;

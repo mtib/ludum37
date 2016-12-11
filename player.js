@@ -11,7 +11,7 @@ function Player(x, y) {
     KEY.setUpHandler("space", function() {
         if (this.isHiding) {
             GAME.pushGameObj(this.sprite);
-            stage.removeChild(this.blend);
+            guiStage.removeChild(this.blend);
             delete this.blend;
             this.isHiding = false;
         }else if (GAME.canHide) {
@@ -20,7 +20,7 @@ function Player(x, y) {
             this.blend.scale = GAME.scale;
             this.blend.alpha = 0.95;
             this.blend.position.set(GAME.hidePos.x, GAME.hidePos.y-GAME.scale.y*20);
-            stage.addChild(this.blend);
+            guiStage.addChild(this.blend);
             GAME.getCurrentStage().removeChild(this.sprite);
             this.isHiding = true;
         }
@@ -122,6 +122,9 @@ function Player(x, y) {
         GAME.getCurrentStage().addChild(g);
     }
 
+    this.hud = new PIXI.Graphics();
+    this.hidden_health = 100;
+
     this.update = function() {
         this.sprite.position.set(this.pos.x, this.pos.y);
         if (!this.isHiding) { // Don't move when hiding
@@ -171,6 +174,20 @@ function Player(x, y) {
             }
             if ( n >= 0 && n != this.currentface ) {
                 this.switch_sprite_array(n);
+            }
+        } else {
+            GAME.gobj().lineStyle(50, 0xFF0000);
+            // Example:
+            // let health = 60; // 60%
+            // let maxhealth = 100; // 100%
+            // let o = Math.PI * (0.5-health/maxhealth/2);
+            let o = Math.PI * (0.5 - this.hidden_health/200);
+            GAME.gobj().arc(HCENTER, VCENTER+100, 200, Math.PI+o, -o, false);
+            this.hidden_health -= 0.05 * deltaT;
+            if ( this.hidden_health <= 0 ) {
+                // throw player out
+                // destroy object
+                this.hidden_health = 100;
             }
         }
         if ( this.animstate < 0 ) {

@@ -60,12 +60,17 @@ function gameUpdate() {
         return {index: best, dist: min_dist};
     })();
 
+    GAME.headsup.text = "";
     if (best.dist < GAME.scale.x*40) {
         if (!GAME.player.isHiding && GAME.gameobjects[best.index].hideable) {
             let pb = GAME.gameobjects[best.index].position;
-            gobj.drawCircle(pb.x, pb.y, 15);
+            // gobj.drawCircle(pb.x, pb.y, 15);
             GAME.canHide = true;
             GAME.hidePos = pb;
+            GAME.headsup.text = "[space]\nto hide";
+            GAME.headsup.position = POINTS.new(pb.x, pb.y - GAME.gameobjects[best.index].height/2);
+        } else {
+            // ?
         }
     } else {
         GAME.canHide = false;
