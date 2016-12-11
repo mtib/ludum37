@@ -6,6 +6,12 @@ Coworker = (function(){
     var walkspeed = 0.1;
     var coworkers = [];
     function Walker(appear, spawn) {
+        this.overhead = newText("!", null, 50, 0xFF0000);
+        this.overhead.style.dropShadow = true;
+        this.overhead.style.dropShadowBlur = 5;
+        this.overhead.style.dropShadowDistance = 1;
+        this.overhead.style.dropShadowColor = 0;
+        guiStage.addChild(this.overhead);
         this.appear = appear;
         this.route = spawn;
         this.target = spawn;
@@ -38,6 +44,8 @@ Coworker = (function(){
                     this.sprites[i][j].position.set( this.position.x, this.position.y );
                 }
             }
+            this.overhead.position.x = this.position.x;
+            this.overhead.position.y = this.position.y - this.sprite.height*1.1;
         };
         this.newTarget = function() {
             this.route = this.target;

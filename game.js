@@ -35,7 +35,9 @@ function handle() {
     }
 }
 
+let gameCounter = 0;
 function gameUpdate() {
+    gameCounter += 1;
     let gobj = GAME.regen_gobj();
     GAME.player.update();
     let best = (function(){
@@ -68,7 +70,7 @@ function gameUpdate() {
             GAME.hideObj = obj;
             GAME.canHide = true;
             GAME.headsup.text = "[space]\nto hide";
-            GAME.headsup.position = POINTS.new(obj.position.x, obj.position.y - GAME.gameobjects[best.index].height/2);
+            GAME.headsup.position = POINTS.new(obj.position.x, obj.position.y - GAME.gameobjects[best.index].height/2 + Math.sin(gameCounter/20.0)*GAME.scale.x*3);
         }
     } else {
         GAME.canHide = false;

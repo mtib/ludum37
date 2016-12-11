@@ -54,7 +54,7 @@ var GAME = (function(){
                 return this.getStage("GAME").children.length-1
             }
         },
-        headsup: newText("", 30),
+        headsup: newText("", null, 30, 0xFFFFFF),
         getBackY: function() { return backwall; },
         switch_to: function(newMode) {
             // destroying what needs to be destroyed
