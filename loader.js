@@ -27,7 +27,7 @@ var GAME = (function(){
             played_air_theme = false;
         },
         tickTimer: function() {
-            this.score += deltaT * Coworker.num_coworkers;
+            this.score += deltaT * Coworker.num_coworkers/6;
             this.scoreText.text = "SCORE: " + Math.floor(this.score) + " / " + this.highscore;
             let rel = counter / countermax * 5;
             counter -= deltaT;
