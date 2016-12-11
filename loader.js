@@ -103,6 +103,9 @@ var GAME = (function(){
                     var ticket = getTexture("cardthing");
                     ticket.position.y = backwall - this.scale.y * 22;
                     ticket.position.x = door.position.x - this.scale.x * 80;
+                    ticket.scale = this.scale;
+                    ticket.anchor.set(0.5,1);
+                    gameStage.addChild(ticket);
 
                     var shelf = getTexture("shelf");
                     shelf.position.y = backwall + this.scale.y * 12;
@@ -153,7 +156,7 @@ var GAME = (function(){
                     trash3.position.x = rtax(.625);
 
                     this.gameobjects = [
-                        door, ticket, shelf, plant1, plant2,
+                        door, shelf, plant1, plant2,
                         vase, printer, fridge, trash1, trash2, trash3
                     ];
 

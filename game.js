@@ -69,7 +69,7 @@ function gameUpdate() {
         Coworker.coworkers[i].update();
     }
 
-    for ( var i = 0; i < GAME.getCurrentStage().children.length - 1; i++ ) {
+    for ( var i = 2; i < GAME.getCurrentStage().children.length - 1; i++ ) {
         let obj1 = GAME.getCurrentStage().getChildAt(i);
         let obj2 = GAME.getCurrentStage().getChildAt(i+1);
         if ( obj1.position.y > obj2.position.y ) {
