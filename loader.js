@@ -15,6 +15,7 @@ var GAME = (function(){
     var countermax = 60*1000;
     var counter = countermax;
     var played_air_theme = false;
+    var menur = 0.35;
     return {
         mode: "SETUP",
         highscore: 0,
@@ -89,15 +90,18 @@ var GAME = (function(){
                         var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46, 0xFFFFFF);
                         var setting_btn = newText("Settings", function(e){GAME.switch_to(GAME.conf)}, 46, 0xFFFFFF);
                         this.menuScore = newText("you don't have a highscore yet", null, 30, 0x666666);
+                        explain = newText("try to hide from your coworkers, to 'skip' work\nbut stamp your card before the time runs out\n\n'?' - a coworker can hear you\n'??' - a coworker can smell you\n'!' - a coworker can see you", null, 30, 0x888888);
                         var bg = getTexture("menutitel");
                         bg.width = WIDTH;
                         bg.height = HEIGHT;
-                        start_btn.position.set(WIDTH*0.36, VCENTER-50);
-                        setting_btn.position.set(WIDTH*0.36, VCENTER+50);
-                        this.menuScore.position.set(WIDTH*0.36, VCENTER+150);
+                        start_btn.position.set(WIDTH*menur, VCENTER-130);
+                        setting_btn.position.set(WIDTH*menur, VCENTER-80);
+                        explain.position.set(WIDTH*menur, VCENTER+40);
+                        this.menuScore.position.set(WIDTH*menur, VCENTER+140);
                         menuStage.addChild(bg);
                         menuStage.addChild(start_btn);
                         menuStage.addChild(setting_btn);
+                        menuStage.addChild(explain);
                         menuStage.addChild(this.menuScore);
                     } else {
                         this.menuScore.text = "your highscore is: " + this.highscore;
@@ -326,13 +330,13 @@ var GAME = (function(){
                                 Coworker.num_coworkers = parseInt(prompt("number of coworkers:"));
                             }, 46, 0xFFFFFF);
                     this.cownb.anchor.set(0.5,0.5);
-                    this.cownb.position.set(WIDTH*0.36, VCENTER);
+                    this.cownb.position.set(WIDTH*menur, VCENTER);
                     this.back = newText("back",
                             function(e) {
                                 GAME.switch_to(GAME.menu);
                             }, 46, 0xFFFFFF);
                     this.back.anchor.set(0.5,0.5);
-                    this.back.position.set(WIDTH*0.36, VCENTER+100);
+                    this.back.position.set(WIDTH*menur, VCENTER+100);
                     confStage.addChild(this.bg);
                     confStage.addChild(this.cownb);
                     confStage.addChild(this.back);
