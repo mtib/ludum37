@@ -77,6 +77,7 @@ function rtay( ry ) {
 }
 
 function getTexture(name) {
+    cons(name);
     return new PIXI.Sprite(PIXI.loader.resources[name].texture)
 }
 
@@ -110,6 +111,9 @@ POINTS = (function() {
         },
         dist: function(p1, p2) {
             return p1.dist(p2);
+        },
+        new: function(x, y) {
+            return new Point(x,y);
         }
     }
 })();

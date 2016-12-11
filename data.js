@@ -60,6 +60,9 @@ var DATA = (function() {
                 loader.add(IMAGES[i][1], prefix + IMAGES[i][0]);
             }
             loader.load(callback);
+        },
+        getTexture: function(texture_name) {
+            return getTexture(texture_name);
         }
     };
 })();
@@ -78,8 +81,10 @@ DATA.add_simple("example");
 DATA.add_simple("plant");
 DATA.add_simple("shelf");
 DATA.add_simple("vase");
+DATA.add_simple("blend");
 
 DATA.add_folder("coworker");
+DATA.add_folder("boss");
 DATA.add_folder("hero");
 
 DATA.add_music("TheOfficeMain", "office");
