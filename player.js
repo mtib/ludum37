@@ -18,7 +18,7 @@ function Player(x, y) {
             this.blend = getTexture("blend");
             this.blend.anchor.set(0.5,0.5);
             this.blend.scale = GAME.scale;
-            this.blend.position.set(GAME.hidePos.x, GAME.hidePos.y);
+            this.blend.position.set(GAME.hidePos.x, GAME.hidePos.y-GAME.scale.y*20);
             stage.addChild(this.blend);
             GAME.getCurrentStage().removeChild(this.sprite);
             this.isHiding = true;
