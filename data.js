@@ -47,6 +47,9 @@ var DATA = (function() {
         get_sound: function(name) {
             return SOUNDS[name]
         },
+        play_sound: function(name) {
+            SOUNDS[name].play();
+        },
         play: function(name) {
             MUSICS[name].play();
         },
@@ -98,3 +101,5 @@ DATA.add_folder("hero");
 DATA.add_music("TheOfficeMain", "office");
 DATA.add_music("Boss_Theme", "boss");
 DATA.add_music("Menu_Theme", "menu");
+
+DATA.add_sound("NeedAir", "air");

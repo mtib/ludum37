@@ -14,19 +14,26 @@ var GAME = (function(){
     var gobj = null;
     var countermax = 60*1000;
     var counter = countermax;
+    var played_air_theme = false;
     return {
         mode: "SETUP",
         gameobjects: [],
         gobj: function() { return gobj; },
         resetTimer: function() {
             counter = countermax;
+            played_air_theme = false;
         },
         tickTimer: function() {
             let rel = counter / countermax * 5;
             counter -= deltaT;
             let h = Math.floor(rel);
             let m = Math.floor((rel-h)*60);
+            if ( h < 1 && m < 45 && !played_air_theme ) {
+                DATA.play_sound("air");
+                played_air_theme = true;
+            }
             if ( h < 0 ) {
+                played_air_theme = false;
                 GAME.switch_to(GAME.end);
                 return GAME.clock.setTime(0,0);
             }
@@ -333,9 +340,9 @@ var pointlist = (function() {
     let r2 = .594; // ✓
     let r3 = .970; // ✓
     return [
-        POINTS.fromRel(c1, r1), // 0 c1 top
+        POINTS.fromRel(c1-.05, r1), // 0 c1 top
         POINTS.fromRel(c1, r2), // 1 c1 middle
-        POINTS.fromRel(c1, r3), // 2 c1 bottom
+        POINTS.fromRel(c1-.05, r3), // 2 c1 bottom
 
         POINTS.fromRel(.27, r2+.05), // 3 q1
 
@@ -345,14 +352,14 @@ var pointlist = (function() {
 
         POINTS.fromRel(c2+.1, r2+0.05), // 7 q2
 
-        POINTS.fromRel(c3, r1), // 8
+        POINTS.fromRel(c3+.05, r1-.01), // 8
         POINTS.fromRel(c3, r2), // 9
         POINTS.fromRel(c3, r3), // 10
 
         POINTS.fromRel(c3-.12, r2+0.05), // 11 q3
 
         POINTS.fromRel(.666,.26), // 12 ticket machine
-        POINTS.fromRel(.821,.226) // door
+        POINTS.fromRel(.821,.226) // 13 door
     ];
 })();
 
@@ -366,11 +373,11 @@ var adjlist = (function() {
         [5, 4, 6, 7],
         [6, 5, 2, 10],
         [7, 5],
-        [8, 4, 12, 9],
+        [8, 4, 9], // used to go to 12
         [9, 8, 10, 11],
         [10, 9, 6],
         [11, 9],
         [12, 4, 8],
-        [13, 8]
+        [8] // 13 == door
     ];
 })();
