@@ -141,6 +141,19 @@ Coworker = (function(){
                     // player went up to coworker
                     this.detectedPlayer();
                 } else if ( pdl < rtax(0.1 * f) ) {
+                    let diff = this.position.diff(GAME.player.pos);
+                    let unitc = diff.unit();
+                    let diffl = diff.length();
+
+                    for ( var i = 20; i < diffl; i+=20 ) {
+                        let p = {pos: this.position.add(unitc.clone().mult(i))}
+                        for ( var j = 0; j < GAME.gameobjects.length; j++ ) {
+                            if ( person_is_colliding_bb(p, GAME.gameobjects[j]) ) {
+                                return;
+                            }
+                        }
+                    }
+
                     // coworker saw the player
                     this.overhead.text = "!";
                     if (this.target != "P") {
@@ -149,7 +162,6 @@ Coworker = (function(){
                     // follow the player
                     this.targetPoint = GAME.player.pos.clone();
                     this.target = "P";
-                    let diff = this.position.diff(this.targetPoint);
                     this.deltav = POINTS.new(
                         diff.x / diff.length() * deltaT * walkspeed,
                         diff.y / diff.length() * deltaT * walkspeed
