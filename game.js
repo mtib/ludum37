@@ -68,4 +68,13 @@ function gameUpdate() {
     for ( var i = 0; i < Coworker.coworkers.length; i++ ) {
         Coworker.coworkers[i].update();
     }
+
+    for ( var i = 0; i < GAME.getCurrentStage().children.length - 1; i++ ) {
+        let obj1 = GAME.getCurrentStage().getChildAt(i);
+        let obj2 = GAME.getCurrentStage().getChildAt(i+1);
+        if ( obj1.position.y > obj2.position.y ) {
+            GAME.getCurrentStage().removeChild(obj2);
+            GAME.getCurrentStage().addChildAt(obj2, i);
+        }
+    }
 }

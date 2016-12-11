@@ -85,7 +85,7 @@ function Player(x, y) {
         } else {
             this.flip(true);
         }
-        GAME.getCurrentStage().addChild(this.sprite);
+        GAME.pushGameObj(this.sprite);
         this.currentface = to;
     }
 
@@ -160,7 +160,7 @@ function Player(x, y) {
             this.animstate = animmax;
             this.currentindex = (this.currentindex + 1) % this.show.length;
             this.sprite = this.show[this.currentindex];
-            GAME.getCurrentStage().addChild(this.sprite);
+            GAME.pushGameObj(this.sprite);
         }
         for ( var i = 0; i < this.allSprites.length; i++ ) {
             for ( var j = 0; j < this.allSprites[i].length; j++) {
@@ -180,6 +180,9 @@ function person_is_colliding_bb(person, bbobj) {
     let px = person.pos.x;
     let py = person.pos.y;
     let bh = bbobj.height;
+    if ( bbobj.tall ) {
+        bh = bh/2;
+    }
     let bw = bbobj.width/2;
     let val = (bx + bw > px - np*2) && (bx - bw < px + np*2) && (by - bh < py) && (by > py - np);
     if (show_colls && val) {

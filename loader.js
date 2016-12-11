@@ -20,6 +20,21 @@ var GAME = (function(){
             this.getCurrentStage().addChild(gobj);
             return gobj;
         },
+        pushGameObj: function(sprite) {
+            if ( this.getStage("GAME").children.length == 0 ) {
+                this.getStage("GAME").addChild(sprite);
+                return 0;
+            } else {
+                for ( var i = 0; i < this.getStage("GAME").children.length; i++ ) {
+                    if ( this.getStage("GAME").getChildAt(i).position.y > sprite.position.y ) {
+                        this.getStage("GAME").addChildAt(sprite, i);
+                        return i;
+                    }
+                }
+                this.getStage("GAME").addChild(sprite);
+                return this.getStage("GAME").children.length-1
+            }
+        },
         getBackY: function() { return backwall; },
         switch_to: function(newMode) {
             // destroying what needs to be destroyed
@@ -53,7 +68,7 @@ var GAME = (function(){
                     var bg = getTexture("bg");
                     bg.width = WIDTH;
                     bg.height = HEIGHT;
-                    gameStage.addChild(bg);
+                    this.pushGameObj(bg);
                     this.scale = {x: bg.scale.x, y: bg.scale.y};
 
                     var door = getTexture("bossdoor");
@@ -187,7 +202,7 @@ var GAME = (function(){
                     for (var i in this.gameobjects) {
                         this.gameobjects[i].scale = this.scale;
                         this.gameobjects[i].anchor.set(0.5,1);
-                        gameStage.addChild(this.gameobjects[i]);
+                        this.pushGameObj(this.gameobjects[i]);
 
                         // border box:
                         let g = new PIXI.Graphics();
@@ -199,13 +214,13 @@ var GAME = (function(){
                         g.drawRect(x-w/2, y-h, w, h);
                         if (borderbox_show) {
                             // actually show it:
-                            gameStage.addChild(g);
+                            this.pushGameObj(g);
                         }
                     }
                     Coworker.generate_coworkers();
                     this.player = new Player(rtax(.3), rtay(.65));
                     this.player.postfix();
-                    gameStage.addChild(this.player.sprite);
+                    this.pushGameObj(this.player.sprite);
                     gameStage.addChild(this.clock.hours);
                     gameStage.addChild(this.clock.minutes);
                     DATA.play("office");

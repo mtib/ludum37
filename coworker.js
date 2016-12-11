@@ -41,7 +41,8 @@ Coworker = (function(){
         this.newTarget = function() {
             this.route = this.target;
             this.target = getPossibleNext(this.route);
-            let diff = this.position.diff(pointlist[this.target]);
+            let split = 10 * GAME.scale.x;
+            let diff = this.position.diff(pointlist[this.target].add(POINTS.new((Math.random()-0.5)*10, (Math.random()-0.5)*10)));
             this.deltav = POINTS.new(
                 diff.x / diff.length() * deltaT * walkspeed,
                 diff.y / diff.length() * deltaT * walkspeed
