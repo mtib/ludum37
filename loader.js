@@ -319,7 +319,7 @@ var pointlist = (function() {
 
         POINTS.fromRel(c3-.12, r2+0.05), // 11 q3
 
-        POINTS.fromRel(.666,.26), // 12 ticket maschine
+        POINTS.fromRel(.666,.26), // 12 ticket machine
         POINTS.fromRel(.821,.226) // door
     ];
 })();
