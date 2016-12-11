@@ -14,17 +14,23 @@ var KEY = (function() {
             key.isDown = false;
             key.keyUp = null;
 
-            KEY[name] = keyCode;
+            KEY[name] = [keyCode];
             KEYS[keyCode] = key;
         },
+        addAlias: function(keycode, name) {
+            KEYS[keycode] = KEYS[this[name][0]];
+            this[name].push(keycode);
+        },
         setUpHandler: function(key, upHandler) {
-            KEYS[this[key]].keyUp = upHandler;
+            this[key].forEach(function(k) {
+                KEYS[k].keyUp = upHandler;
+            })
         },
         isUp: function(key) {
-            return !KEYS[KEY[key]].isDown;
+            return !KEYS[KEY[key][0]].isDown;
         },
         isDown: function(key) {
-            return KEYS[KEY[key]].isDown;
+            return KEYS[KEY[key][0]].isDown;
         }
     };
     window.addEventListener("keydown", function(e) {
@@ -50,13 +56,16 @@ KEY.add("w", 87);
 KEY.add("a", 65);
 KEY.add("s", 83);
 KEY.add("d", 68);
-KEY.add("up", 38);
-KEY.add("down", 40);
-KEY.add("right", 39);
-KEY.add("left", 37);
-KEY.add("e", 69);
 KEY.add("space", 32);
 KEY.add("return", 13);
+
+// Allow arrow keys for movement
+KEY.addAlias(38, "w");
+KEY.addAlias(40, "s");
+KEY.addAlias(39, "d");
+KEY.addAlias(37, "a");
+// Allow pressing e instead of space
+KEY.addAlias(69, "space");
 
 function newText( text, callback=null, size=24, fill=0x000000, font="VT323") {
     let tmp = new PIXI.Text(text, {fontFamily: font, fontSize: size, fill: fill, align: "center"});
