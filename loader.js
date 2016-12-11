@@ -118,12 +118,14 @@ var GAME = (function(){
                     plant1.position.x = HCENTER - this.scale.x * 10;
                     plant1.hideable = true;
                     plant1.tall = true;
+                    plant1.short_width = 0.3;
 
                     var plant2 = getTexture("plant");
                     plant2.position.y = VCENTER;
                     plant2.position.x = WIDTH - this.scale.x * 20;
                     plant2.hideable = true;
                     plant2.tall = true;
+                    plant2.short_width = 0.3;
 
                     var vase = getTexture("vase");
                     vase.position.y = VCENTER;
