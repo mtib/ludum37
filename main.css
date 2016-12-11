@@ -12,11 +12,11 @@ body {
 
 h1, h2, h3, p {
     text-align: center;
-    font-family: "VT323", monospace;
+    font-family: "Source Sans Pro", monospace;
+    text-rendering: optimizeSpeed;
 }
 
 p {
-    font-family: monospace;
     color: #333;
     background-color: #FFF;
     padding: 1em;
