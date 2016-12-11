@@ -35,7 +35,7 @@ var GAME = (function(){
             }
             if ( h < 0 ) {
                 played_air_theme = false;
-                GAME.switch_to(GAME.end);
+                GAME.switch_to(GAME.end, '\nYOU FORGOT TO STAMP YOUR CARD IN TIME!');
                 return GAME.clock.setTime(0,0);
             }
             GAME.clock.setTime(h,m);
@@ -66,7 +66,7 @@ var GAME = (function(){
         headsup: newText("", null, 30, 0xFFFFFF),
         gameVersion: 0,
         getBackY: function() { return backwall; },
-        switch_to: function(newMode) {
+        switch_to: function(newMode, xsrd=null) {
             this.gameVersion += 1;
             guiStage.removeChildren();
             Coworker.coworkers = [];
@@ -286,7 +286,7 @@ var GAME = (function(){
                 case GAME.end:
                     DATA.get_sound("air").stop();
                     let end_text = newText(
-                            "YOU LOST!\n[ENTER] to retry",
+                            "YOU LOST!"+(xsrd?xsrd:'')+"\n[ENTER] to retry",
                             function(e) {
                                 GAME.switch_to(GAME.menu);
                             }, 60, 0x000000);
