@@ -61,10 +61,12 @@ function gameUpdate() {
     })();
 
     if (best.dist < GAME.scale.x*40) {
-        let pb = GAME.gameobjects[best.index].position;
-        gobj.drawCircle(pb.x, pb.y, 15);
-        GAME.canHide = true;
-        GAME.hidePos = pb;
+        if (!GAME.player.isHiding) {
+            let pb = GAME.gameobjects[best.index].position;
+            gobj.drawCircle(pb.x, pb.y, 15);
+            GAME.canHide = true;
+            GAME.hidePos = pb;
+        }
     } else {
         GAME.canHide = false;
         delete GAME.hidePos;
