@@ -3,6 +3,8 @@ PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 var divContainer = document.getElementById("container");
 divContainer.appendChild(renderer.view);
 var stage = new PIXI.Container();
+var guiStage = new PIXI.Container();
+stage.addChild(guiStage);
 
 var GAME = (function(){
     var gameStage = new PIXI.Container();
@@ -10,9 +12,21 @@ var GAME = (function(){
     var confStage = new PIXI.Container();
     var backwall = HEIGHT / 5.1;
     var gobj = null;
+    var countermax = 60*1000;
+    var counter = countermax;
     return {
         mode: "SETUP",
         gameobjects: [],
+        resetTimer: function() {
+            counter = countermax;
+        },
+        tickTimer: function() {
+            let rel = counter / countermax * 5;
+            counter -= deltaT;
+            let h = Math.floor(rel);
+            let m = Math.floor((rel-h)*60);
+            GAME.clock.setTime(h,m);
+        },
         regen_gobj: function() {
             gobj.destroy();
             gobj = new PIXI.Graphics();
@@ -226,14 +240,14 @@ var GAME = (function(){
                     this.player = new Player(rtax(.3), rtay(.65));
                     this.player.postfix();
                     this.pushGameObj(this.player.sprite);
-                    gameStage.addChild(this.clock.hours);
-                    gameStage.addChild(this.clock.minutes);
+                    guiStage.addChild(this.clock.hours);
+                    guiStage.addChild(this.clock.minutes);
                     DATA.play("office");
                     break;
                 default:
                     break;
             }
-            stage.addChild(this.getStage(newMode));
+            stage.addChildAt(this.getStage(newMode),0);
 
             cons("changed from mode ["+this.mode+"] to ["+newMode+"]");
             this.mode = newMode;
