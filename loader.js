@@ -1,5 +1,4 @@
 var renderer = new PIXI.autoDetectRenderer(WIDTH, HEIGHT, { antialias: false, roundPixels: true } );
-renderer.backgroundColor = 0xFFFFFF;
 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 var divContainer = document.getElementById("container");
 divContainer.appendChild(renderer.view);
@@ -50,8 +49,8 @@ var GAME = (function(){
             switch (newMode) {
                 case this.menu:
                     if (menuStage.children.length == 0) {
-                        var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46);
-                        var setting_btn = newText("Settings", null, 46);
+                        var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46, 0xFFFFFF);
+                        var setting_btn = newText("Settings", null, 46, 0xFFFFFF);
                         var bg = getTexture("menutitel");
                         bg.width = WIDTH;
                         bg.height = HEIGHT;
