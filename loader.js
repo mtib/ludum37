@@ -314,7 +314,7 @@ var pointlist = (function() {
 
         POINTS.fromRel(c3-.12, r2), // 11 q3
 
-        POINTS.fromRel(.666,.232), // 12 ticket maschine
+        POINTS.fromRel(.666,.26), // 12 ticket maschine
         POINTS.fromRel(.821,.226) // door
     ];
 })();
@@ -329,7 +329,7 @@ var adjlist = (function() {
         [5, 4, 6, 7],
         [6, 5, 2, 10],
         [7, 5],
-        [8, 4, 12, 9, 13],
+        [8, 4, 12, 9],
         [9, 8, 10, 11],
         [10, 9, 6],
         [11, 9],

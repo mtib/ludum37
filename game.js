@@ -61,7 +61,7 @@ function gameUpdate() {
     })();
 
     if (best.dist < GAME.scale.x*40) {
-        if (!GAME.player.isHiding) {
+        if (!GAME.player.isHiding && GAME.gameobjects[best.index].hideable) {
             let pb = GAME.gameobjects[best.index].position;
             gobj.drawCircle(pb.x, pb.y, 15);
             GAME.canHide = true;

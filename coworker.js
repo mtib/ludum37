@@ -66,8 +66,8 @@ Coworker = (function(){
             } else {
                 this.position = this.position.add(this.deltav);
             }
-            this.switchSprite();
             this.waiting -= deltaT;
+            this.switchSprite();
         };
         this.switchSprite = function() {
             let unit = this.deltav.unit();
@@ -77,16 +77,16 @@ Coworker = (function(){
             if ( Math.abs(yp) < 0.4 ) {
                 // use left or right facing sprite
                 if ( xp > 0 ) {
-                    this.sprite = this.sprites[1][0];
+                    this.sprite = this.sprites[1][Math.max(Math.floor(this.waiting/waittime*2),0)];
                 } else {
-                    this.sprite = this.sprites[3][0];
+                    this.sprite = this.sprites[3][Math.max(Math.floor(this.waiting/waittime*2),0)];
                 }
             } else {
                 // use up or down facing sprite
                 if ( yp > 0 ) {
-                    this.sprite = this.sprites[2][0];
+                    this.sprite = this.sprites[2][Math.max(Math.floor(this.waiting/waittime*2),0)];
                 } else {
-                    this.sprite = this.sprites[0][0];
+                    this.sprite = this.sprites[0][Math.max(Math.floor(this.waiting/waittime*2),0)];
                 }
             }
             GAME.pushGameObj(this.sprite);
