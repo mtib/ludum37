@@ -26,7 +26,7 @@ var GAME = (function(){
             counter -= deltaT;
             let h = Math.floor(rel);
             let m = Math.floor((rel-h)*60);
-            if ( h <= 0 ) {
+            if ( h < 0 ) {
                 return GAME.clock.setTime(0,0);
             }
             GAME.clock.setTime(h,m);
