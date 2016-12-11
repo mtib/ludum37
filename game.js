@@ -77,4 +77,5 @@ function gameUpdate() {
             GAME.getCurrentStage().addChildAt(obj2, i);
         }
     }
+    GAME.tickTimer();
 }
