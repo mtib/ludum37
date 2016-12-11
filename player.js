@@ -14,13 +14,10 @@ function Player(x, y) {
         }
         GAME.pushGameObj(this.sprite);
         guiStage.removeChild(this.blend);
-        delete this.blend;
         this.isHiding = false;
 
         GAME.getCurrentStage().removeChild(GAME.toKill);
         GAME.pushGameObj(GAME.hideObj);
-        delete GAME.toKill;
-        delete GAME.hideObj;
         return true;
     }
     KEY.setUpHandler("space", function() {
@@ -35,7 +32,7 @@ function Player(x, y) {
             let hobj = GAME.hideObj;
 
             if (!hobj.health)
-                hobj.health = 100;
+                hobj.health = 200;
 
             this.blend.position.set(hobj.position.x, hobj.position.y-GAME.scale.y*20);
             guiStage.addChild(this.blend);
@@ -209,12 +206,12 @@ function Player(x, y) {
             // let maxhealth = 100; // 100%
             // let o = Math.PI * (0.5-health/maxhealth/2);
             let o = Math.PI * (0.5 - h.health/(2*maxhealth));
-            GAME.gobj().arc(HCENTER, VCENTER+100, 200, Math.PI+o, -o, false);
+            GAME.gobj().arc(HCENTER, VCENTER, 200, Math.PI+o, -o, false);
             h.health -= 0.02 * deltaT;
             if ( h.health <= 0 ) {
                 this.exitHidingPlace();
-                // TODO destroy object
-                h.health = maxhealth;
+                GAME.getCurrentStage().removeChild(GAME.hideObj);
+                GAME.gameobjects.splice(GAME.gameobjects.indexOf(GAME.hideObj),1);
             }
         }
         if ( this.animstate < 0 ) {
