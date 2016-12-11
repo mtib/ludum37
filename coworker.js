@@ -95,7 +95,7 @@ Coworker = (function(){
 
     return {
         coworkers: coworkers,
-        num_coworkers: 1000,
+        num_coworkers: 6,
         second_between: 3,
         generate_coworkers: function(wt) {
             for ( var i = 0; i < this.num_coworkers; i++ ) {
