@@ -306,13 +306,13 @@ var pointlist = (function() {
         POINTS.fromRel(c2, r2), // 5
         POINTS.fromRel(c2, r3), // 6
 
-        POINTS.fromRel(c2+.1, r2), // 7 q2
+        POINTS.fromRel(c2+.1, r2+0.05), // 7 q2
 
         POINTS.fromRel(c3, r1), // 8
         POINTS.fromRel(c3, r2), // 9
         POINTS.fromRel(c3, r3), // 10
 
-        POINTS.fromRel(c3-.12, r2), // 11 q3
+        POINTS.fromRel(c3-.12, r2+0.05), // 11 q3
 
         POINTS.fromRel(.666,.26), // 12 ticket maschine
         POINTS.fromRel(.821,.226) // door
