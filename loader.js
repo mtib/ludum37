@@ -87,7 +87,7 @@ var GAME = (function(){
                 case this.menu:
                     if (menuStage.children.length == 0) {
                         var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46, 0xFFFFFF);
-                        var setting_btn = newText("Settings", null, 46, 0xFFFFFF);
+                        var setting_btn = newText("Settings", function(e){GAME.switch_to(GAME.conf)}, 46, 0xFFFFFF);
                         this.menuScore = newText("you don't have a highscore yet", null, 30, 0x666666);
                         var bg = getTexture("menutitel");
                         bg.width = WIDTH;
@@ -296,7 +296,7 @@ var GAME = (function(){
                     guiStage.addChild(this.clock.minutes);
                     DATA.play("office");
                     break;
-                case GAME.end:
+                case this.end:
                     if ( this.score > this.highscore ) {
                         this.highscore = Math.floor(this.score);
                     }
@@ -315,6 +315,27 @@ var GAME = (function(){
                     KEY.setUpHandler("return", function(e) {
                         GAME.switch_to(GAME.menu);
                     });
+                    break;
+                case this.conf:
+                    confStage.removeChildren();
+                    this.bg = getTexture("menutitel");
+                    this.bg.width = WIDTH;
+                    this.bg.height = HEIGHT;
+                    this.cownb = newText("change number of coworkers",
+                            function(e) {
+                                Coworker.num_coworkers = parseInt(prompt("number of coworkers:"));
+                            }, 46, 0xFFFFFF);
+                    this.cownb.anchor.set(0.5,0.5);
+                    this.cownb.position.set(WIDTH*0.36, VCENTER);
+                    this.back = newText("back",
+                            function(e) {
+                                GAME.switch_to(GAME.menu);
+                            }, 46, 0xFFFFFF);
+                    this.back.anchor.set(0.5,0.5);
+                    this.back.position.set(WIDTH*0.36, VCENTER+100);
+                    confStage.addChild(this.bg);
+                    confStage.addChild(this.cownb);
+                    confStage.addChild(this.back);
                     break;
                 default:
                     break;
