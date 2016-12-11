@@ -193,6 +193,9 @@ function person_is_colliding_bb(person, bbobj) {
         bh = bh/2;
     }
     let bw = bbobj.width/2;
+    if ( bbobj.short_width ) {
+        bw = bw * bbobj.short_width;
+    }
     let val = (bx + bw > px - np*2) && (bx - bw < px + np*2) && (by - bh < py) && (by > py - np);
     if (show_colls && val) {
         let g = new PIXI.Graphics();

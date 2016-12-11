@@ -86,7 +86,7 @@ Coworker = (function(){
                 if ( yp > 0 ) {
                     this.sprite = this.sprites[2][0];
                 } else {
-                    this.sprite - this.sprites[0][0];
+                    this.sprite = this.sprites[0][0];
                 }
             }
             GAME.pushGameObj(this.sprite);
