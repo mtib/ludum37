@@ -95,14 +95,15 @@ Coworker = (function(){
 
     return {
         coworkers: coworkers,
-        num_coworkers: 10,
+        num_coworkers: 1000,
+        second_between: 3,
         generate_coworkers: function(wt) {
             for ( var i = 0; i < this.num_coworkers; i++ ) {
                 let nc = this.new(13);
                 setTimeout(function(){
                     GAME.getCurrentStage().addChild(nc.sprite);
                     Coworker.coworkers.push(nc);
-                },i*3000);
+                },i*this.second_between*1000);
             }
         },
         new: function(spawn) {
