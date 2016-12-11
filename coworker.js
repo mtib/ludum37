@@ -74,7 +74,9 @@ Coworker = (function(){
                 return;
             }
             this.route = this.target;
-            this.target = getPossibleNext(this.route);
+            do {
+                this.target = getPossibleNext(this.route);
+            } while ( this.appear == "boss" &&  this.route == this.target );
             let split = 10 * GAME.scale.x;
             this.targetPoint = pointlist[this.target].add(
                 POINTS.new(
@@ -112,9 +114,13 @@ Coworker = (function(){
             let pdl = pd.length();
             let d = this.deltav.dot(pd);
             this.overhead.text = "";
+            let f = 1;
+            if ( this.appear == "boss" ) {
+                f = 1.5;
+            }
             if ( d > pdl ) {
                 if ( GAME.player.isHiding ) {
-                    if ( pdl < rtax(0.05) ) {
+                    if ( pdl < rtax(0.05 * f) ) {
                         if ( this.target == "P" ) {
                             // was just(!) following the player
                             // and is close now
@@ -130,12 +136,15 @@ Coworker = (function(){
                     }
                     return;
                 }
-                if ( pdl < rtax(0.05 ) ) {
+                if ( pdl < rtax(0.05 * f) ) {
                     // player went up to coworker
                     this.detectedPlayer();
-                } else if ( pdl < rtax(0.1) ) {
+                } else if ( pdl < rtax(0.1 * f) ) {
                     // coworker saw the player
                     this.overhead.text = "!";
+                    if (this.target != "P") {
+                        DATA.play_sound("notice");
+                    }
                     // follow the player
                     this.targetPoint = GAME.player.pos.clone();
                     this.target = "P";
@@ -144,7 +153,7 @@ Coworker = (function(){
                         diff.x / diff.length() * deltaT * walkspeed,
                         diff.y / diff.length() * deltaT * walkspeed
                     );
-                } else if ( pdl < rtax(0.15) ) {
+                } else if ( pdl < rtax(0.15 * f) ) {
                     // hears the player
                     this.overhead.text = "?";
                 } else {

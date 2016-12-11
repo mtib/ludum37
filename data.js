@@ -103,3 +103,6 @@ DATA.add_music("Boss_Theme", "boss");
 DATA.add_music("Menu_Theme", "menu");
 
 DATA.add_sound("NeedAir", "air");
+DATA.add_sound("explosion", "explosion");
+DATA.add_sound("notice", "notice");
+

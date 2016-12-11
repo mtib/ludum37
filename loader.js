@@ -20,6 +20,7 @@ var GAME = (function(){
         gameobjects: [],
         gobj: function() { return gobj; },
         resetTimer: function() {
+            DATA.get_sound("air").stop();
             counter = countermax;
             played_air_theme = false;
         },
@@ -283,6 +284,7 @@ var GAME = (function(){
                     DATA.play("office");
                     break;
                 case GAME.end:
+                    DATA.get_sound("air").stop();
                     let end_text = newText(
                             "YOU LOST!\n[ENTER] to retry",
                             function(e) {
