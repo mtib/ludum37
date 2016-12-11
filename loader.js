@@ -17,6 +17,7 @@ var GAME = (function(){
     var played_air_theme = false;
     return {
         mode: "SETUP",
+        highscore: 0,
         gameobjects: [],
         gobj: function() { return gobj; },
         resetTimer: function() {
@@ -25,6 +26,8 @@ var GAME = (function(){
             played_air_theme = false;
         },
         tickTimer: function() {
+            this.score += deltaT;
+            this.scoreText.text = "SCORE: " + Math.floor(this.score) + " / " + this.highscore;
             let rel = counter / countermax * 5;
             counter -= deltaT;
             let h = Math.floor(rel);
@@ -85,14 +88,19 @@ var GAME = (function(){
                     if (menuStage.children.length == 0) {
                         var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46, 0xFFFFFF);
                         var setting_btn = newText("Settings", null, 46, 0xFFFFFF);
+                        this.menuScore = newText("you don't have a highscore yet", null, 30, 0x666666);
                         var bg = getTexture("menutitel");
                         bg.width = WIDTH;
                         bg.height = HEIGHT;
                         start_btn.position.set(WIDTH*0.36, VCENTER-50);
                         setting_btn.position.set(WIDTH*0.36, VCENTER+50);
+                        this.menuScore.position.set(WIDTH*0.36, VCENTER+150);
                         menuStage.addChild(bg);
                         menuStage.addChild(start_btn);
                         menuStage.addChild(setting_btn);
+                        menuStage.addChild(this.menuScore);
+                    } else {
+                        this.menuScore.text = "your highscore is: " + this.highscore;
                     }
                     DATA.play("menu");
                     KEY.setUpHandler("return", function(e) {
@@ -102,6 +110,11 @@ var GAME = (function(){
                 case this.game:
                     gameStage.removeChildren();
                     guiStage.addChild(this.headsup);
+                    this.scoreText = newText("SCORE: 12345", null, 30, 0x333333);
+                    this.scoreText.anchor.set(0,1);
+                    this.scoreText.position.set(10, HEIGHT-10);
+                    this.score = 0;
+                    guiStage.addChild(this.scoreText);
                     this.headsup.style.dropShadow = true;
                     this.headsup.style.dropShadowBlur = 10;
                     this.headsup.style.dropShadowDistance = 2;
@@ -284,6 +297,9 @@ var GAME = (function(){
                     DATA.play("office");
                     break;
                 case GAME.end:
+                    if ( this.score > this.highscore ) {
+                        this.highscore = Math.floor(this.score);
+                    }
                     DATA.get_sound("air").stop();
                     let end_text = newText(
                             "YOU LOST!"+(xsrd?xsrd:'')+"\n[ENTER] to retry",
