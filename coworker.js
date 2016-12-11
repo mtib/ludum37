@@ -10,6 +10,7 @@ Coworker = (function(){
         this.route = spawn;
         this.target = spawn;
         this.position = pointlist[spawn];
+        this.targetPoint = this.position.clone();
         this.deltav = POINTS.new(0,0);
         this.getSpriteOf = function(face, flip=false) {
             let t = getTexture(this.appear + face);
@@ -26,9 +27,9 @@ Coworker = (function(){
         }
         this.sprites = [
             [this.getSpriteOf("B1"), this.getSpriteOf("B2")],
-            [this.getSpriteOf("S1"), this.getSpriteOf("S2")],
+            [this.getSpriteOf("S1", true), this.getSpriteOf("S2", true)],
             [this.getSpriteOf("F1"), this.getSpriteOf("F2")],
-            [this.getSpriteOf("S1", true), this.getSpriteOf("S2", true)]
+            [this.getSpriteOf("S1"), this.getSpriteOf("S2")]
         ];
         this.sprite = this.sprites[2][0];
         this.updatePosition = function() {
@@ -42,7 +43,13 @@ Coworker = (function(){
             this.route = this.target;
             this.target = getPossibleNext(this.route);
             let split = 10 * GAME.scale.x;
-            let diff = this.position.diff(pointlist[this.target].add(POINTS.new((Math.random()-0.5)*10, (Math.random()-0.5)*10)));
+            this.targetPoint = pointlist[this.target].add(
+                POINTS.new(
+                    (Math.random()-0.5)*split,
+                    (Math.random()-0.5)*split
+                )
+            );
+            let diff = this.position.diff(this.targetPoint);
             this.deltav = POINTS.new(
                 diff.x / diff.length() * deltaT * walkspeed,
                 diff.y / diff.length() * deltaT * walkspeed
@@ -51,7 +58,7 @@ Coworker = (function(){
         this.waiting = -1;
         this.update = function() {
             this.updatePosition();
-            if ( this.position.diff(pointlist[this.target]).length() < 10 ) {
+            if ( this.position.diff(this.targetPoint).length() < 10 ) {
                 if ( this.waiting < 0 ) {
                     this.newTarget();
                     this.waiting = waittime;
@@ -59,7 +66,30 @@ Coworker = (function(){
             } else {
                 this.position = this.position.add(this.deltav);
             }
+            this.switchSprite();
             this.waiting -= deltaT;
+        };
+        this.switchSprite = function() {
+            let unit = this.deltav.unit();
+            let xp = unit.x;
+            let yp = unit.y;
+            GAME.getCurrentStage().removeChild(this.sprite);
+            if ( Math.abs(yp) < 0.4 ) {
+                // use left or right facing sprite
+                if ( xp > 0 ) {
+                    this.sprite = this.sprites[1][0];
+                } else {
+                    this.sprite = this.sprites[3][0];
+                }
+            } else {
+                // use up or down facing sprite
+                if ( yp > 0 ) {
+                    this.sprite = this.sprites[2][0];
+                } else {
+                    this.sprite - this.sprites[0][0];
+                }
+            }
+            GAME.pushGameObj(this.sprite);
         };
     }
 

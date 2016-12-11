@@ -98,6 +98,11 @@ POINTS = (function() {
         this.clone = function() {
             return new Point(this.x, this.y);
         }
+        this.unit = function(l=1) {
+            let x = this.x / this.length() * l;
+            let y = this.y / this.length() * l;
+            return new Point(x, y);
+        }
     }
     return {
         ZERO: new Point(0,0),
