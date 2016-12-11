@@ -49,13 +49,13 @@ var GAME = (function(){
             switch (newMode) {
                 case this.menu:
                     if (menuStage.children.length == 0) {
-                        var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46);
-                        var setting_btn = newText("Settings", null, 46);
-                        var bg = getTexture("example");
+                        var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46, 0xFFFFFF);
+                        var setting_btn = newText("Settings", null, 46, 0xFFFFFF);
+                        var bg = getTexture("menutitel");
                         bg.width = WIDTH;
                         bg.height = HEIGHT;
-                        start_btn.position.set(HCENTER, VCENTER);
-                        setting_btn.position.set(HCENTER, VCENTER+50);
+                        start_btn.position.set(WIDTH*0.36, VCENTER-50);
+                        setting_btn.position.set(WIDTH*0.36, VCENTER+50);
                         menuStage.addChild(bg);
                         menuStage.addChild(start_btn);
                         menuStage.addChild(setting_btn);

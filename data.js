@@ -82,6 +82,7 @@ DATA.add_simple("plant");
 DATA.add_simple("shelf");
 DATA.add_simple("vase");
 DATA.add_simple("blend");
+DATA.add_simple("menutitel");
 
 DATA.add_folder("coworker");
 DATA.add_folder("boss");
