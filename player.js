@@ -6,6 +6,17 @@ function Player(x, y) {
         return (this.pos.x < px) || (this.pos.x > WIDTH-px) || (this.pos.y < GAME.getBackY()+py) || (this.pos.y > HEIGHT-py);
     }
 
+    this.isHiding = false;
+
+    KEY.setUpHandler("space", function() {
+        if (this.isHiding) {
+            this.isHiding = false;
+        }else if (GAME.canHide) {
+            cons("HIDING!");
+            this.isHiding = true;
+        }
+    }.bind(this));
+
     this.sprite = getTexture("heroF1");
     this.speed = .1;
     this.persfac = .8;
@@ -104,52 +115,54 @@ function Player(x, y) {
 
     this.update = function() {
         this.sprite.position.set(this.pos.x, this.pos.y);
-        let n = -1;
-        let pos_before = this.pos.clone();
-        if (KEY.isDown("a")) {
-            this.pos.x -= deltaT * this.speed * GAME.scale.x;
-            this.animstate -= 1;
-            n = 3;
-        } else if (KEY.isDown("d")) {
-            this.pos.x += deltaT * this.speed * GAME.scale.x;
-            this.animstate -= 1;
-            n = 1;
-        }
-        let did_a_bad = false;
-        for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
-            if (person_is_colliding_bb(this, GAME.gameobjects[i])) {
-                did_a_bad = true;
-                // this.gbb(GAME.gameobjects[i]);
-                // this.draw_colls();
-                break;
+        if (!this.isHiding) { // Don't move when hiding
+            let n = -1;
+            let pos_before = this.pos.clone();
+            if (KEY.isDown("a")) {
+                this.pos.x -= deltaT * this.speed * GAME.scale.x;
+                this.animstate -= 1;
+                n = 3;
+            } else if (KEY.isDown("d")) {
+                this.pos.x += deltaT * this.speed * GAME.scale.x;
+                this.animstate -= 1;
+                n = 1;
             }
-        }
-        if (did_a_bad || this.oob()) {
-            this.pos = pos_before.clone();
-        } else {
-            pos_before = this.pos.clone();
-        }
-        if (KEY.isDown("w")) {
-            this.pos.y -= deltaT * this.speed * this.persfac * GAME.scale.y;
-            this.animstate -= 1;
-            n = 0;
-        } else if (KEY.isDown("s")) {
-            this.pos.y += deltaT * this.speed * this.persfac * GAME.scale.y;
-            this.animstate -= 1;
-            n = 2;
-        }
-        did_a_bad = false;
-        for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
-            if (person_is_colliding_bb(this, GAME.gameobjects[i])) {
-                did_a_bad = true;
-                break;
+            let did_a_bad = false;
+            for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
+                if (person_is_colliding_bb(this, GAME.gameobjects[i])) {
+                    did_a_bad = true;
+                    // this.gbb(GAME.gameobjects[i]);
+                    // this.draw_colls();
+                    break;
+                }
             }
-        }
-        if (did_a_bad || this.oob()) {
-            this.pos = pos_before.clone();
-        }
-        if ( n >= 0 && n != this.currentface ) {
-            this.switch_sprite_array(n);
+            if (did_a_bad || this.oob()) {
+                this.pos = pos_before.clone();
+            } else {
+                pos_before = this.pos.clone();
+            }
+            if (KEY.isDown("w")) {
+                this.pos.y -= deltaT * this.speed * this.persfac * GAME.scale.y;
+                this.animstate -= 1;
+                n = 0;
+            } else if (KEY.isDown("s")) {
+                this.pos.y += deltaT * this.speed * this.persfac * GAME.scale.y;
+                this.animstate -= 1;
+                n = 2;
+            }
+            did_a_bad = false;
+            for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
+                if (person_is_colliding_bb(this, GAME.gameobjects[i])) {
+                    did_a_bad = true;
+                    break;
+                }
+            }
+            if (did_a_bad || this.oob()) {
+                this.pos = pos_before.clone();
+            }
+            if ( n >= 0 && n != this.currentface ) {
+                this.switch_sprite_array(n);
+            }
         }
         if ( this.animstate < 0 ) {
             GAME.getCurrentStage().removeChild(this.sprite);

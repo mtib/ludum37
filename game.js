@@ -59,11 +59,13 @@ function gameUpdate() {
         }
         return {index: best, dist: min_dist};
     })();
-    
+
     if (best.dist < GAME.scale.x*40) {
         let pb = GAME.gameobjects[best.index].position;
         gobj.drawCircle(pb.x, pb.y, 15);
-    }
+        GAME.canHide = true;
+    } else
+        GAME.canHide = false;
 
     for ( var i = 0; i < Coworker.coworkers.length; i++ ) {
         Coworker.coworkers[i].update();
