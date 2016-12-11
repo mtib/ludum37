@@ -63,18 +63,15 @@ function gameUpdate() {
     GAME.headsup.text = "";
     if (best.dist < GAME.scale.x*40) {
         if (!GAME.player.isHiding && GAME.gameobjects[best.index].hideable) {
-            let pb = GAME.gameobjects[best.index].position;
-            // gobj.drawCircle(pb.x, pb.y, 15);
+            let obj = GAME.gameobjects[best.index];
+            // gobj.drawCircle(obj.position.x, obj.position.y, 15);
+            GAME.hideObj = obj;
             GAME.canHide = true;
-            GAME.hidePos = pb;
             GAME.headsup.text = "[space]\nto hide";
-            GAME.headsup.position = POINTS.new(pb.x, pb.y - GAME.gameobjects[best.index].height/2);
-        } else {
-            // ?
+            GAME.headsup.position = POINTS.new(obj.position.x, obj.position.y - GAME.gameobjects[best.index].height/2);
         }
     } else {
         GAME.canHide = false;
-        delete GAME.hidePos;
     }
 
     if (GAME.gameobjects[best.index].notice){

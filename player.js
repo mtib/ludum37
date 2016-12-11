@@ -14,13 +14,30 @@ function Player(x, y) {
             guiStage.removeChild(this.blend);
             delete this.blend;
             this.isHiding = false;
+
+            GAME.getCurrentStage().removeChild(GAME.toKill);
+            GAME.pushGameObj(GAME.hideObj);
+            delete GAME.toKill;
+            delete GAME.hideObj;
         }else if (GAME.canHide) {
             this.blend = getTexture("blend");
             this.blend.anchor.set(0.5,0.5);
             this.blend.scale = GAME.scale;
             this.blend.alpha = 0.95;
-            this.blend.position.set(GAME.hidePos.x, GAME.hidePos.y-GAME.scale.y*20);
+
+            let hobj = GAME.hideObj;
+
+            this.blend.position.set(hobj.position.x, hobj.position.y-GAME.scale.y*20);
             guiStage.addChild(this.blend);
+
+            let hiddenObj = getTexture(hobj._texture.baseTexture.imageUrl.slice(10, -4)+'X');
+            ["position", "anchor", "scale"].forEach(function(f){
+                hiddenObj[f] = hobj[f];
+            });
+            GAME.getCurrentStage().removeChild(hobj);
+            GAME.toKill = hiddenObj;
+            GAME.pushGameObj(hiddenObj);
+
             GAME.getCurrentStage().removeChild(this.sprite);
             this.isHiding = true;
         }

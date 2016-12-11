@@ -22,6 +22,10 @@ var DATA = (function() {
         add_simple: function(sname) {
             this.add(sname+".png", sname);
         },
+        add_hidable: function(sname) {
+            this.add_simple(sname);
+            this.add_simple(sname+'X');
+        },
         add_folder: function(sname) {
             for (var i = 0; i < extentions.length; i++) {
                 this.add(sname+"/"+sname+extentions[i]+".png", sname+extentions[i]);
@@ -69,22 +73,23 @@ var DATA = (function() {
 
 DATA.add_simple("bg");
 DATA.add_simple("cardthing");
-DATA.add_simple("fridge");
-DATA.add_simple("printer");
-DATA.add_simple("tabelH");
-DATA.add_simple("tabelV");
 DATA.add_simple("trashcan");
 DATA.add_simple("wallH");
 DATA.add_simple("wallV");
 DATA.add_simple("bossdoor");
 DATA.add_simple("example");
-DATA.add_simple("plant");
-DATA.add_simple("shelf");
-DATA.add_simple("vase");
 DATA.add_simple("blend");
 DATA.add_simple("menutitel");
 DATA.add_simple("chair1");
 DATA.add_simple("chair2");
+
+DATA.add_hidable("printer");
+DATA.add_hidable("shelf");
+DATA.add_hidable("fridge");
+DATA.add_hidable("tabelH");
+DATA.add_hidable("tabelV");
+DATA.add_hidable("vase");
+DATA.add_hidable("plant");
 
 DATA.add_folder("coworker");
 DATA.add_folder("boss");
