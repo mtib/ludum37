@@ -71,14 +71,14 @@ POINTS = (function() {
 // checks whether hard coded points of interest of the
 // person lie within the bounding box
 function person_is_colliding_bb(person, bbobj) {
-    let np = (GAME.scale.x + GAME.scale.y)/2 * 4;
+    let np = (GAME.scale.x + GAME.scale.y)/2 * 7;
     let bx = bbobj.position.x;
     let by = bbobj.position.y;
     let px = person.pos.x;
     let py = person.pos.y;
     let bh = bbobj.height;
     let bw = bbobj.width/2;
-    let val = (bx + bw > px - np) && (bx - bw < px + np) && (by - bh < py) && (by > py - np);
+    let val = (bx + bw > px - np*2) && (bx - bw < px + np*2) && (by - bh < py) && (by > py - np);
     if (val) {
         let g = new PIXI.Graphics();
         g.lineStyle(3, 0x00FF00);
