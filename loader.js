@@ -110,12 +110,6 @@ var GAME = (function(){
                         this.minutes.text = ('0'+this.time % 60).slice(-2);
                         this.hours.text = Math.floor(this.time/60).toString();
                     }
-                    // this will break, when doing more complex rendering stuffs
-                    // https://github.com/pixijs/pixi.js/issues/3373
-                    //
-                    // window.setInterval(function(){
-                    //     this.add(1);
-                    // }.bind(this.clock), 1000);
 
                     var ticket = getTexture("cardthing");
                     ticket.position.y = backwall + this.scale.y * 10;
