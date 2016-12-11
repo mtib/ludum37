@@ -194,8 +194,8 @@ var GAME = (function(){
 
                     newWall(rtax(.55),rtay(.48));
                     newWall(rtax(.7),rtay(.48));
-                    newTable(.59,.66);
-                    newTable(.66,.66);
+                    newTable(.588,.66);
+                    newTable(.662,.66);
                     newWall(rtax(.625),rtay(.65),false);
                     newWall(rtax(.625),rtay(.8),false);
                     newWall(rtax(.55),rtay(.8));
