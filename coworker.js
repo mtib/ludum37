@@ -6,7 +6,7 @@ Coworker = (function(){
     var walkspeed = 0.1;
     var coworkers = [];
     function Walker(appear, spawn) {
-        this.overhead = newText("!", null, 50, 0xFF0000);
+        this.overhead = newText("", null, 50, 0xFF0000);
         this.overhead.style.dropShadow = true;
         this.overhead.style.dropShadowBlur = 5;
         this.overhead.style.dropShadowDistance = 1;
@@ -48,6 +48,31 @@ Coworker = (function(){
             this.overhead.position.y = this.position.y - this.sprite.height*1.1;
         };
         this.newTarget = function() {
+            if ( this.target == "P" ) {
+                let mini = null;
+                let mina = null;
+                for ( var i = 0; i < pointlist.length; i++ ) {
+                    let dist = this.position.dist(pointlist[i]);
+                    if (!mina) {
+                        mini = i;
+                        mina = dist;
+                        continue;
+                    }
+                    if ( dist < mina ) {
+                        mini = i;
+                        mina = dist;
+                    }
+                }
+                this.route = mini;
+                this.target = mini;
+                this.targetPoint = pointlist[this.target].clone();
+                let diff = this.position.diff(this.targetPoint);
+                this.deltav = POINTS.new(
+                    diff.x / diff.length() * deltaT * walkspeed,
+                    diff.y / diff.length() * deltaT * walkspeed
+                );
+                return;
+            }
             this.route = this.target;
             this.target = getPossibleNext(this.route);
             let split = 10 * GAME.scale.x;
@@ -75,7 +100,58 @@ Coworker = (function(){
                 this.position = this.position.add(this.deltav);
             }
             this.waiting -= deltaT;
+            this.see();
             this.switchSprite();
+        };
+        this.detectedPlayer = function() {
+            this.overhead.text = "!!!";
+            // TODO lose?
+        }
+        this.see = function() {
+            let pd = this.position.diff(GAME.player.pos);
+            let pdl = pd.length();
+            let d = this.deltav.dot(pd);
+            this.overhead.text = "";
+            if ( d > pdl ) {
+                if ( GAME.player.isHiding ) {
+                    if ( pdl < rtax(0.05) ) {
+                        if ( this.target == "P" ) {
+                            // was just(!) following the player
+                            // and is close now
+                            this.detectedPlayer();
+                        } else {
+                            // has no clue the player is there,
+                            // but is close
+                            this.overhead.text = "??";
+                        }
+                    } else {
+                        // to far away to see hidden player
+                        this.overhead.text = "";
+                    }
+                    return;
+                }
+                if ( pdl < rtax(0.05 ) ) {
+                    // player went up to coworker
+                    this.detectedPlayer();
+                } else if ( pdl < rtax(0.1) ) {
+                    // coworker saw the player
+                    this.overhead.text = "!";
+                    // follow the player
+                    this.targetPoint = GAME.player.pos.clone();
+                    this.target = "P";
+                    let diff = this.position.diff(this.targetPoint);
+                    this.deltav = POINTS.new(
+                        diff.x / diff.length() * deltaT * walkspeed,
+                        diff.y / diff.length() * deltaT * walkspeed
+                    );
+                } else if ( pdl < rtax(0.15) ) {
+                    // hears the player
+                    this.overhead.text = "?";
+                } else {
+                    // no clue
+                    this.overhead.text = "";
+                }
+            }
         };
         this.switchSprite = function() {
             let unit = this.deltav.unit();

@@ -103,6 +103,14 @@ POINTS = (function() {
             let y = this.y / this.length() * l;
             return new Point(x, y);
         }
+        this.dot = function(p2) {
+            return this.x * p2.x + this.y * p2.y;
+        }
+        this.mult = function(fact) {
+            this.x *= fact;
+            this.y *= fact;
+            return this;
+        }
     }
     return {
         ZERO: new Point(0,0),
@@ -117,6 +125,12 @@ POINTS = (function() {
         },
         new: function(x, y) {
             return new Point(x,y);
+        },
+        dot: function(p1, p2) {
+            return p1.dot(p2);
+        },
+        fromPIXI: function(pp) {
+            return new Point(pp.x, pp.y);
         }
     }
 })();
