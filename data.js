@@ -83,6 +83,8 @@ DATA.add_simple("shelf");
 DATA.add_simple("vase");
 DATA.add_simple("blend");
 DATA.add_simple("menutitel");
+DATA.add_simple("chair1");
+DATA.add_simple("chair2");
 
 DATA.add_folder("coworker");
 DATA.add_folder("boss");

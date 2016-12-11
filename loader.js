@@ -174,9 +174,18 @@ var GAME = (function(){
                     trash3.position.y = rtay(.87);
                     trash3.position.x = rtax(.625);
 
+                    var chair1 = getTexture("chair1");
+                    chair1.position.x = rtax(.71);
+                    chair1.position.y = rtay(.586);
+
+                    var chair2 = getTexture("chair2");
+                    chair2.position.x = rtax(.526);
+                    chair2.position.y = rtay(.586);
+
                     this.gameobjects = [
                         ticket, door, shelf, plant1, plant2,
-                        vase, printer, fridge, trash1, trash2, trash3
+                        vase, printer, fridge, trash1, trash2, trash3,
+                        chair1, chair2
                     ];
 
                     function newWall(x, y, horizontal=true) {
