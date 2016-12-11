@@ -57,6 +57,7 @@ var GAME = (function(){
         headsup: newText("", null, 30, 0xFFFFFF),
         getBackY: function() { return backwall; },
         switch_to: function(newMode) {
+            Coworker.coworkers = [];
             // destroying what needs to be destroyed
             DATA.stop_all();
             switch (this.mode) {
@@ -68,6 +69,7 @@ var GAME = (function(){
             // build what needs to be built
             switch (newMode) {
                 case this.menu:
+                    guiStage.removeChildren();
                     if (menuStage.children.length == 0) {
                         var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46, 0xFFFFFF);
                         var setting_btn = newText("Settings", null, 46, 0xFFFFFF);
@@ -81,6 +83,9 @@ var GAME = (function(){
                         menuStage.addChild(setting_btn);
                     }
                     DATA.play("menu");
+                    KEY.setUpHandler("return", function(e) {
+                        GAME.switch_to(GAME.game);
+                    });
                     break;
                 case this.game:
                     gameStage.removeChildren();
@@ -263,6 +268,22 @@ var GAME = (function(){
                     guiStage.addChild(this.clock.minutes);
                     DATA.play("office");
                     break;
+                case GAME.end:
+                    let end_text = newText(
+                            "YOU LOST!\n[ENTER] to retry",
+                            function(e) {
+                                GAME.switch_to(GAME.menu);
+                            }, 60, 0x000000);
+                    end_text.position.set(HCENTER, VCENTER);
+                    end_text.style.dropShadow = true;
+                    end_text.style.dropShadowColor = 0xFFFFFF;
+                    end_text.style.dropShadowBlur = 10;
+                    end_text.style.dropShadowDistance = 2;
+                    this.getCurrentStage().addChild(end_text);
+                    KEY.setUpHandler("return", function(e) {
+                        GAME.switch_to(GAME.menu);
+                    });
+                    break;
                 default:
                     break;
             }
@@ -276,6 +297,7 @@ var GAME = (function(){
             switch (mode) {
                 case this.menu:
                     return menuStage;
+                case this.end:
                 case this.game:
                     return gameStage;
                 case this.conf:
@@ -290,7 +312,8 @@ var GAME = (function(){
         // modes:
         menu: "MENU",
         game: "GAME",
-        conf: "CONFIG"
+        conf: "CONFIG",
+        end: "END"
     };
 })();
 

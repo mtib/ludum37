@@ -56,6 +56,7 @@ KEY.add("right", 39);
 KEY.add("left", 37);
 KEY.add("e", 69);
 KEY.add("space", 32);
+KEY.add("return", 13);
 
 function newText( text, callback=null, size=24, fill=0x000000, font="VT323") {
     let tmp = new PIXI.Text(text, {fontFamily: font, fontSize: size, fill: fill, align: "center"});

@@ -105,7 +105,7 @@ Coworker = (function(){
         };
         this.detectedPlayer = function() {
             this.overhead.text = "!!!";
-            // TODO lose?
+            GAME.switch_to(GAME.end);
         }
         this.see = function() {
             let pd = this.position.diff(GAME.player.pos);
