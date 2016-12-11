@@ -10,9 +10,17 @@ function Player(x, y) {
 
     KEY.setUpHandler("space", function() {
         if (this.isHiding) {
+            GAME.getCurrentStage().addChild(this.sprite);
+            stage.removeChild(this.blend);
+            delete this.blend;
             this.isHiding = false;
         }else if (GAME.canHide) {
-            cons("HIDING!");
+            this.blend = getTexture("blend");
+            this.blend.anchor.set(0.5,0.5);
+            this.blend.scale = GAME.scale;
+            this.blend.position.set(GAME.hidePos.x, GAME.hidePos.y);
+            stage.addChild(this.blend);
+            GAME.getCurrentStage().removeChild(this.sprite);
             this.isHiding = true;
         }
     }.bind(this));

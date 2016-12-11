@@ -64,8 +64,11 @@ function gameUpdate() {
         let pb = GAME.gameobjects[best.index].position;
         gobj.drawCircle(pb.x, pb.y, 15);
         GAME.canHide = true;
-    } else
+        GAME.hidePos = pb;
+    } else {
         GAME.canHide = false;
+        delete GAME.hidePos;
+    }
 
     for ( var i = 0; i < Coworker.coworkers.length; i++ ) {
         Coworker.coworkers[i].update();
