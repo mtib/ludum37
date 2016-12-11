@@ -77,7 +77,6 @@ function rtay( ry ) {
 }
 
 function getTexture(name) {
-    cons(name);
     return new PIXI.Sprite(PIXI.loader.resources[name].texture)
 }
 

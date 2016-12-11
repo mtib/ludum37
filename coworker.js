@@ -10,8 +10,15 @@ Coworker = (function(){
         this.route = spawn;
         this.target = spawn;
         this.position = pointlist[spawn];
+        this.deltav = POINTS.new(0,0);
         this.getSpriteOf = function(face, flip=false) {
             let t = getTexture(this.appear + face);
+            t.anchor.set(0.5, 1.0);
+            if (this.appear == "boss") {
+                t.scale.set(GAME.scale.x, GAME.scale.y);
+            } else {
+                t.scale.set(GAME.scale.x * 0.7, GAME.scale.y * 0.7);
+            }
             if (flip) {
                 t.scale.x = -1 * t.scale.x;
             }
@@ -36,15 +43,15 @@ Coworker = (function(){
             this.target = getPossibleNext(this.route);
             let diff = this.position.diff(pointlist[this.target]);
             this.deltav = POINTS.new(
-                diff.x / diff.length * deltaT * walkspeed,
-                diff.y / diff.length * deltaT * walkspeed
+                diff.x / diff.length() * deltaT * walkspeed,
+                diff.y / diff.length() * deltaT * walkspeed
             );
         }
-        this.waiting = waittime;
+        this.waiting = -1;
         this.update = function() {
             this.updatePosition();
-            if ( this.position.diff(this.pointlist[this.target]).length < GAME.scale.x * 2 ) {
-                if ( this.waittime < 0 ) {
+            if ( this.position.diff(pointlist[this.target]).length() < 10 ) {
+                if ( this.waiting < 0 ) {
                     this.newTarget();
                     this.waiting = waittime;
                 }
@@ -57,6 +64,16 @@ Coworker = (function(){
 
     return {
         coworkers: coworkers,
+        num_coworkers: 10,
+        generate_coworkers: function(wt) {
+            for ( var i = 0; i < this.num_coworkers; i++ ) {
+                let nc = this.new(13);
+                setTimeout(function(){
+                    GAME.getCurrentStage().addChild(nc.sprite);
+                    Coworker.coworkers.push(nc);
+                },i*3000);
+            }
+        },
         new: function(spawn) {
             return new Walker("coworker", spawn);
         },

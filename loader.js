@@ -202,6 +202,7 @@ var GAME = (function(){
                             gameStage.addChild(g);
                         }
                     }
+                    Coworker.generate_coworkers();
                     this.player = new Player(rtax(.3), rtay(.65));
                     this.player.postfix();
                     gameStage.addChild(this.player.sprite);
