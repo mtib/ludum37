@@ -107,7 +107,8 @@ Coworker = (function(){
         };
         this.detectedPlayer = function() {
             this.overhead.text = "!!!";
-            GAME.switch_to(GAME.end, '\nYOU WERE CAUGHT BY A COWORKER!');
+            GAME.switch_to(GAME.end, '\nYOU WERE CAUGHT BY '
+                + (this.appear=="boss"?'THE BOSS':'A COWORKER') + '!');
         }
         this.see = function() {
             let pd = this.position.diff(GAME.player.pos);
