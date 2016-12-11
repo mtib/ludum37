@@ -5,7 +5,7 @@ var HEIGHT = 720;
 var VCENTER = HEIGHT/2;
 var HCENTER = WIDTH/2;
 
-var renderer = new PIXI.WebGLRenderer(WIDTH, HEIGHT, { antialias: false, roundPixels: true } );
+var renderer = new PIXI.autoDetectRenderer(WIDTH, HEIGHT, { antialias: false, roundPixels: true } );
 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 var divContainer = document.getElementById("container");
 divContainer.appendChild(renderer.view);
@@ -47,6 +47,12 @@ POINTS = (function() {
         this.dist = function(p2) {
             return this.diff(p2).length();
         }
+        this.add = function(p2) {
+            return new Point(this.x + p2.x, this.y + p2.y);
+        }
+        this.clone = function() {
+            return new Point(this.x, this.y);
+        }
     }
     return {
         ZERO: new Point(0,0),
@@ -62,12 +68,52 @@ POINTS = (function() {
     }
 })();
 
+// checks whether hard coded points of interest of the
+// person lie within the bounding box
+function person_is_colliding_bb(person, bbobj) {
+    let np = (GAME.scale.x + GAME.scale.y)/2 * 4;
+    let bx = bbobj.position.x;
+    let by = bbobj.position.y;
+    let px = person.pos.x;
+    let py = person.pos.y;
+    let bh = bbobj.height;
+    let bw = bbobj.width/2;
+    let val = (bx + bw > px - np) && (bx - bw < px + np) && (by - bh < py) && (by > py - np);
+    if (val) {
+        let g = new PIXI.Graphics();
+        g.lineStyle(3, 0x00FF00);
+        g.drawCircle(bx,by,10);
+        GAME.getCurrentStage().addChild(g);
+    }
+    return val;
+    /*
+     * +-----+ ^
+     * |     | |
+     * |     | h
+     * |     | |
+     * +--b--+ v
+     * <--w-->
+     *
+     */
+}
+
 function Player(x, y) {
     this.pos = POINTS.fromAbs(x, y);
+    this.oob = function() {
+        let px = 10 * GAME.scale.x;
+        let py = 5 * GAME.scale.y;
+        return (this.pos.x < px) || (this.pos.x > WIDTH-px) || (this.pos.y < GAME.getBackY()+py) || (this.pos.y > HEIGHT-py);
+    }
 
     this.sprite = getTexture("heroF1");
     this.speed = .1;
     this.persfac = .8;
+
+    GAME.getCurrentStage().interactive = true;
+    GAME.getCurrentStage().hitArea = new PIXI.Rectangle(0,0,WIDTH,HEIGHT);
+    GAME.getCurrentStage().click = function(e) {
+        cons(e);
+    }
 
     isDown = function(key) {
         return KEY.isDown(KEY[key]);
@@ -148,9 +194,26 @@ function Player(x, y) {
         this.currentface = to;
     }
 
+    gbb = function(goi) {
+        let g = new PIXI.Graphics();
+        g.lineStyle(5, 0x00FF00);
+        g.drawRect(goi.position.x-goi.width/2, goi.position.y-goi.height, goi.width, goi.height);
+        GAME.getCurrentStage().addChild(g);
+    }
+
+    this.draw_colls = function() {
+        let g = new PIXI.Graphics();
+        g.lineStyle(2, 0x999999);
+        g.drawRect(this.pos.x-this.sprite.width/2, this.pos.y-this.sprite.height, this.sprite.width, this.sprite.height);
+        g.lineStyle(5, 0x0000FF);
+        g.drawCircle(this.pos.x, this.pos.y, 10);
+        GAME.getCurrentStage().addChild(g);
+    }
+
     this.update = function() {
         this.sprite.position.set(this.pos.x, this.pos.y);
         let n = -1;
+        let pos_before = this.pos.clone();
         if (isDown("a")) {
             this.pos.x -= deltaT * this.speed * GAME.scale.x;
             this.animstate -= 1;
@@ -160,6 +223,20 @@ function Player(x, y) {
             this.animstate -= 1;
             n = 1;
         }
+        let did_a_bad = false;
+        for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
+            if (person_is_colliding_bb(this, GAME.gameobjects[i])) {
+                did_a_bad = true;
+                // gbb(GAME.gameobjects[i]);
+                // this.draw_colls();
+                break;
+            }
+        }
+        if (did_a_bad || this.oob()) {
+            this.pos = pos_before.clone();
+        } else {
+            pos_before = this.pos.clone();
+        }
         if (isDown("w")) {
             this.pos.y -= deltaT * this.speed * this.persfac * GAME.scale.y;
             this.animstate -= 1;
@@ -168,6 +245,16 @@ function Player(x, y) {
             this.pos.y += deltaT * this.speed * this.persfac * GAME.scale.y;
             this.animstate -= 1;
             n = 2;
+        }
+        did_a_bad = false;
+        for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
+            if (person_is_colliding_bb(this, GAME.gameobjects[i])) {
+                did_a_bad = true;
+                break;
+            }
+        }
+        if (did_a_bad || this.oob()) {
+            this.pos = pos_before.clone();
         }
         if ( n >= 0 && n != this.currentface ) {
             this.switch_sprite_array(n);
@@ -187,6 +274,7 @@ function Player(x, y) {
     }
 }
 
+
 var GAME = (function(){
     var gameStage = new PIXI.Container();
     var menuStage = new PIXI.Container();
@@ -195,6 +283,7 @@ var GAME = (function(){
     return {
         mode: "SETUP",
         gameobjects: [],
+        getBackY: function() { return backwall; },
         switch_to: function(newMode) {
             // destroying what needs to be destroyed
             DATA.stop_all();
@@ -226,7 +315,7 @@ var GAME = (function(){
                     var bg = getTexture("bg");
                     bg.width = WIDTH;
                     bg.height = HEIGHT;
-                    bg.position.set(HCENTER, HEIGHT);
+                    gameStage.addChild(bg);
                     this.scale = {x: bg.scale.x, y: bg.scale.y};
 
                     var door = getTexture("bossdoor");
@@ -296,7 +385,7 @@ var GAME = (function(){
                     trash3.position.x = rtax(.625);
 
                     this.gameobjects = [
-                        bg, door, ticket, shelf, plant1, plant2,
+                        door, ticket, shelf, plant1, plant2,
                         vase, printer, fridge, trash1, trash2, trash3
                     ];
 
@@ -312,30 +401,55 @@ var GAME = (function(){
                         GAME.gameobjects.push(w);
                     }
 
+                    function newTable(rx, ry, horizontal=false) {
+                        let t = null;
+                        if (horizontal) {
+                            t = getTexture("tabelH");
+                        } else {
+                            t = getTexture("tabelV");
+                        }
+                        t.position.y = rtay(ry);
+                        t.position.x = rtax(rx);
+                        GAME.gameobjects.push(t);
+                    }
+
                     newWall(rtax(.3),rtay(.48));
                     newWall(rtax(.375),rtay(.65),false);
                     newWall(rtax(.375),rtay(.8),false);
+                    newTable(.3,.75,true);
                     newWall(rtax(.3),rtay(.8));
 
                     newWall(rtax(.55),rtay(.48));
                     newWall(rtax(.7),rtay(.48));
+                    newTable(.59,.66);
+                    newTable(.66,.66);
                     newWall(rtax(.625),rtay(.65),false);
                     newWall(rtax(.625),rtay(.8),false);
                     newWall(rtax(.55),rtay(.8));
                     newWall(rtax(.7),rtay(.8));
 
-                    let toadd = this.gameobjects;
-                    this.player = new Player(rtax(.3), rtay(.55));
-                    toadd.push(this.player.sprite);
-                    for (var i in toadd) {
-                        toadd[i].scale = this.scale;
-                        toadd[i].anchor.set(0.5,1);
-                        gameStage.addChild(toadd[i]);
+                    let borderbox_show = true;
+                    for (var i in this.gameobjects) {
+                        this.gameobjects[i].scale = this.scale;
+                        this.gameobjects[i].anchor.set(0.5,1);
+                        gameStage.addChild(this.gameobjects[i]);
+                        if (borderbox_show) {
+                            let g = new PIXI.Graphics();
+                            g.lineStyle(2,0xFF0000);
+                            let x = this.gameobjects[i].position.x;
+                            let y = this.gameobjects[i].position.y;
+                            let w = this.gameobjects[i].width;
+                            let h = this.gameobjects[i].height;
+                            g.drawRect(x-w/2, y-h, w, h);
+                            gameStage.addChild(g);
+                            this.gameobjects[i].bb=g;
+                        }
                     }
-                    toadd.pop();
+                    this.player = new Player(rtax(.3), rtay(.55));
+                    this.player.postfix();
+                    gameStage.addChild(this.player.sprite);
                     gameStage.addChild(this.clock.hours);
                     gameStage.addChild(this.clock.minutes);
-                    GAME.player.postfix();
                     DATA.play("office");
                     break;
                 default:
