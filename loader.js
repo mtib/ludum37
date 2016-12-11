@@ -27,7 +27,7 @@ var GAME = (function(){
             played_air_theme = false;
         },
         tickTimer: function() {
-            this.score += deltaT;
+            this.score += deltaT * Coworker.num_coworkers;
             this.scoreText.text = "SCORE: " + Math.floor(this.score) + " / " + this.highscore;
             let rel = counter / countermax * 5;
             counter -= deltaT;
@@ -329,13 +329,11 @@ var GAME = (function(){
                             function(e) {
                                 Coworker.num_coworkers = parseInt(prompt("number of coworkers:"));
                             }, 46, 0xFFFFFF);
-                    this.cownb.anchor.set(0.5,0.5);
                     this.cownb.position.set(WIDTH*menur, VCENTER);
                     this.back = newText("back",
                             function(e) {
                                 GAME.switch_to(GAME.menu);
                             }, 46, 0xFFFFFF);
-                    this.back.anchor.set(0.5,0.5);
                     this.back.position.set(WIDTH*menur, VCENTER+100);
                     confStage.addChild(this.bg);
                     confStage.addChild(this.cownb);
