@@ -8,17 +8,24 @@ function Player(x, y) {
 
     this.isHiding = false;
 
+    this.exitHidingPlace = function() {
+        if ( !this.isHiding ) {
+            return false;
+        }
+        GAME.pushGameObj(this.sprite);
+        guiStage.removeChild(this.blend);
+        delete this.blend;
+        this.isHiding = false;
+
+        GAME.getCurrentStage().removeChild(GAME.toKill);
+        GAME.pushGameObj(GAME.hideObj);
+        delete GAME.toKill;
+        delete GAME.hideObj;
+        return true;
+    }
     KEY.setUpHandler("space", function() {
         if (this.isHiding) {
-            GAME.pushGameObj(this.sprite);
-            guiStage.removeChild(this.blend);
-            delete this.blend;
-            this.isHiding = false;
-
-            GAME.getCurrentStage().removeChild(GAME.toKill);
-            GAME.pushGameObj(GAME.hideObj);
-            delete GAME.toKill;
-            delete GAME.hideObj;
+            this.exitHidingPlace();
         }else if (GAME.canHide) {
             this.blend = getTexture("blend");
             this.blend.anchor.set(0.5,0.5);
@@ -160,8 +167,6 @@ function Player(x, y) {
             for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
                 if (person_is_colliding_bb(this, GAME.gameobjects[i])) {
                     did_a_bad = true;
-                    // this.gbb(GAME.gameobjects[i]);
-                    // this.draw_colls();
                     break;
                 }
             }
@@ -200,10 +205,10 @@ function Player(x, y) {
             // let o = Math.PI * (0.5-health/maxhealth/2);
             let o = Math.PI * (0.5 - this.hidden_health/200);
             GAME.gobj().arc(HCENTER, VCENTER+100, 200, Math.PI+o, -o, false);
-            this.hidden_health -= 0.05 * deltaT;
+            this.hidden_health -= 0.02 * deltaT;
             if ( this.hidden_health <= 0 ) {
-                // throw player out
-                // destroy object
+                this.exitHidingPlace();
+                // TODO destroy object
                 this.hidden_health = 100;
             }
         }

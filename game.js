@@ -76,14 +76,18 @@ function gameUpdate() {
         GAME.canHide = false;
     }
 
+    // triggers triggerable objects
     if (GAME.gameobjects[best.index].notice){
         GAME.gameobjects[best.index].notice();
     }
 
+    // updates the coworkers logic
     for ( var i = 0; i < Coworker.coworkers.length; i++ ) {
         Coworker.coworkers[i].update();
     }
 
+    // sorts objects by y-value
+    // not stable
     for ( var i = 1; i < GAME.getCurrentStage().children.length - 1; i++ ) {
         let obj1 = GAME.getCurrentStage().getChildAt(i);
         let obj2 = GAME.getCurrentStage().getChildAt(i+1);
