@@ -249,6 +249,11 @@ var GAME = (function(){
                         }
                     }
                     Coworker.generate_coworkers();
+                    setTimeout(function() {
+                        let b = Coworker.newBoss(13);
+                        Coworker.coworkers.push(b);
+                        GAME.pushGameObj(b.sprite);
+                    }, Coworker.num_coworkers * 1000 * 3 + 2000);
                     this.player = new Player(rtax(.3), rtay(.65));
                     this.player.postfix();
                     this.pushGameObj(this.player.sprite);

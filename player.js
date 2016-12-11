@@ -10,7 +10,7 @@ function Player(x, y) {
 
     KEY.setUpHandler("space", function() {
         if (this.isHiding) {
-            GAME.getCurrentStage().addChild(this.sprite);
+            GAME.pushGameObj(this.sprite);
             stage.removeChild(this.blend);
             delete this.blend;
             this.isHiding = false;
