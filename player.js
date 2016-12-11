@@ -34,6 +34,9 @@ function Player(x, y) {
 
             let hobj = GAME.hideObj;
 
+            if (!hobj.health)
+                hobj.health = 100;
+
             this.blend.position.set(hobj.position.x, hobj.position.y-GAME.scale.y*20);
             guiStage.addChild(this.blend);
 
@@ -198,18 +201,20 @@ function Player(x, y) {
                 this.switch_sprite_array(n);
             }
         } else {
+            var maxhealth = 100;
             GAME.gobj().lineStyle(50, 0xFF0000);
+            let h = GAME.hideObj;
             // Example:
             // let health = 60; // 60%
             // let maxhealth = 100; // 100%
             // let o = Math.PI * (0.5-health/maxhealth/2);
-            let o = Math.PI * (0.5 - this.hidden_health/200);
+            let o = Math.PI * (0.5 - h.health/(2*maxhealth));
             GAME.gobj().arc(HCENTER, VCENTER+100, 200, Math.PI+o, -o, false);
-            this.hidden_health -= 0.02 * deltaT;
-            if ( this.hidden_health <= 0 ) {
+            h.health -= 0.02 * deltaT;
+            if ( h.health <= 0 ) {
                 this.exitHidingPlace();
                 // TODO destroy object
-                this.hidden_health = 100;
+                h.health = maxhealth;
             }
         }
         if ( this.animstate < 0 ) {
