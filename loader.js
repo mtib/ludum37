@@ -97,6 +97,11 @@ function person_is_colliding_bb(person, bbobj) {
      */
 }
 
+function center( sprite ) {
+    return POINTS.fromAbs(sprite.position.x, sprite.position.y+sprite.height/2);
+
+}
+
 function Player(x, y) {
     this.pos = POINTS.fromAbs(x, y);
     this.oob = function() {
@@ -280,9 +285,17 @@ var GAME = (function(){
     var menuStage = new PIXI.Container();
     var confStage = new PIXI.Container();
     var backwall = HEIGHT / 5.1;
+    var gobj = null;
     return {
         mode: "SETUP",
         gameobjects: [],
+        regen_gobj: function() {
+            gobj.destroy();
+            gobj = new PIXI.Graphics();
+            gobj.lineStyle(4,0xB2FF58);
+            this.getCurrentStage().addChild(gobj);
+            return gobj;
+        },
         getBackY: function() { return backwall; },
         switch_to: function(newMode) {
             // destroying what needs to be destroyed
@@ -312,6 +325,7 @@ var GAME = (function(){
                     break;
                 case this.game:
                     gameStage.removeChildren();
+                    gobj = new PIXI.Graphics();
                     var bg = getTexture("bg");
                     bg.width = WIDTH;
                     bg.height = HEIGHT;
@@ -351,26 +365,38 @@ var GAME = (function(){
                     var shelf = getTexture("shelf");
                     shelf.position.y = backwall + this.scale.y * 12;
                     shelf.position.x = HCENTER/2;
+                    shelf.hideable = true;
+                    shelf.tall = true;
 
                     var plant1 = getTexture("plant");
                     plant1.position.y = backwall + this.scale.y * 5;
                     plant1.position.x = HCENTER - this.scale.x * 10;
+                    plant1.hideable = true;
+                    plant1.tall = true;
 
                     var plant2 = getTexture("plant");
                     plant2.position.y = VCENTER;
                     plant2.position.x = WIDTH - this.scale.x * 20;
+                    plant2.hideable = true;
+                    plant2.tall = true;
 
                     var vase = getTexture("vase");
                     vase.position.y = VCENTER;
                     vase.position.x = this.scale.x * 20;
+                    vase.hideable = true;
+                    vase.tall = true;
 
                     var printer = getTexture("printer");
                     printer.position.y = VCENTER * 1.5;
                     printer.position.x = this.scale.x * 20;
+                    printer.hideable = true;
+                    printer.tall = true;
 
                     var fridge = getTexture("fridge");
                     fridge.position.y = HEIGHT - 30 * this.scale.y;
                     fridge.position.x = WIDTH - 20 * this.scale.x;
+                    fridge.hideable = true;
+                    fridge.tall = true;
 
                     var trash1 = getTexture("trashcan");
                     trash1.position.y = HEIGHT - 10 * this.scale.y;
@@ -398,6 +424,7 @@ var GAME = (function(){
                         }
                         w.position.y = y;
                         w.position.x = x;
+                        w.tall = true;
                         GAME.gameobjects.push(w);
                     }
 
@@ -410,13 +437,14 @@ var GAME = (function(){
                         }
                         t.position.y = rtay(ry);
                         t.position.x = rtax(rx);
+                        t.hideable = true;
                         GAME.gameobjects.push(t);
                     }
 
                     newWall(rtax(.3),rtay(.48));
                     newWall(rtax(.375),rtay(.65),false);
                     newWall(rtax(.375),rtay(.8),false);
-                    newTable(.3,.75,true);
+                    newTable(.3,.57,true);
                     newWall(rtax(.3),rtay(.8));
 
                     newWall(rtax(.55),rtay(.48));
@@ -445,7 +473,7 @@ var GAME = (function(){
                             this.gameobjects[i].bb=g;
                         }
                     }
-                    this.player = new Player(rtax(.3), rtay(.55));
+                    this.player = new Player(rtax(.3), rtay(.65));
                     this.player.postfix();
                     gameStage.addChild(this.player.sprite);
                     gameStage.addChild(this.clock.hours);
