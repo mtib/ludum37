@@ -42,7 +42,7 @@ function gameUpdate() {
         let best = null;
         let min_dist = null;
         for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
-            if (!GAME.gameobjects[i].hideable) {
+            if (!GAME.gameobjects[i].hideable && !GAME.gameobjects[i].notice) {
                 continue;
             }
             dist = Math.sqrt(
@@ -72,11 +72,15 @@ function gameUpdate() {
         delete GAME.hidePos;
     }
 
+    if (GAME.gameobjects[best.index].notice){
+        GAME.gameobjects[best.index].notice();
+    }
+
     for ( var i = 0; i < Coworker.coworkers.length; i++ ) {
         Coworker.coworkers[i].update();
     }
 
-    for ( var i = 2; i < GAME.getCurrentStage().children.length - 1; i++ ) {
+    for ( var i = 1; i < GAME.getCurrentStage().children.length - 1; i++ ) {
         let obj1 = GAME.getCurrentStage().getChildAt(i);
         let obj2 = GAME.getCurrentStage().getChildAt(i+1);
         if ( obj1.position.y > obj2.position.y ) {

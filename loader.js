@@ -25,6 +25,9 @@ var GAME = (function(){
             counter -= deltaT;
             let h = Math.floor(rel);
             let m = Math.floor((rel-h)*60);
+            if ( h <= 0 ) {
+                return GAME.clock.setTime(0,0);
+            }
             GAME.clock.setTime(h,m);
         },
         regen_gobj: function() {
@@ -93,8 +96,8 @@ var GAME = (function(){
                     this.clock = {};
                     this.clock.hours = newText("", null, 20, 0x2EAA01);
                     this.clock.minutes = newText("", null, 20, 0x2EAA01);
-                    this.clock.hours.position.set(rtax(.649), rtay(.065));
-                    this.clock.minutes.position.set(rtax(.665), rtay(.065));
+                    this.clock.hours.position.set(rtax(.649), rtay(.075));
+                    this.clock.minutes.position.set(rtax(.665), rtay(.075));
 
                     this.clock.setTime = function(hours, minutes) {
                         this.time = hours*60+minutes;
@@ -115,11 +118,11 @@ var GAME = (function(){
                     // }.bind(this.clock), 1000);
 
                     var ticket = getTexture("cardthing");
-                    ticket.position.y = backwall - this.scale.y * 22;
+                    ticket.position.y = backwall + this.scale.y * 10;
                     ticket.position.x = door.position.x - this.scale.x * 80;
-                    ticket.scale = this.scale;
-                    ticket.anchor.set(0.5,1);
-                    gameStage.addChild(ticket);
+                    ticket.notice = function() {
+                        GAME.resetTimer();
+                    }
 
                     var shelf = getTexture("shelf");
                     shelf.position.y = backwall + this.scale.y * 12;
@@ -172,7 +175,7 @@ var GAME = (function(){
                     trash3.position.x = rtax(.625);
 
                     this.gameobjects = [
-                        door, shelf, plant1, plant2,
+                        ticket, door, shelf, plant1, plant2,
                         vase, printer, fridge, trash1, trash2, trash3
                     ];
 
@@ -302,7 +305,7 @@ var pointlist = (function() {
 
         POINTS.fromRel(c3-.12, r2), // 11 q3
 
-        POINTS.fromRel(.666,.228), // 12 ticket maschine
+        POINTS.fromRel(.666,.232), // 12 ticket maschine
         POINTS.fromRel(.821,.226) // door
     ];
 })();
