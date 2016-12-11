@@ -9,28 +9,28 @@ function getRandomInt(min, max) {
 var KEYS = [];
 var KEY = (function() {
     let obj = {
-        left: 37, up: 38, right: 39, down: 40,
-        a: 65, d: 68, s: 83, w: 87, e: 69,
-        add: function(keycode, keyUp) {
+        add: function(name, keyCode) {
             let key = {};
             key.isDown = false;
-            key.isUp = true;
-            key.keyUp = keyUp;
+            key.keyUp = null;
 
-            KEYS[keycode] = key;
+            KEY[name] = keyCode;
+            KEYS[keyCode] = key;
+        },
+        setUpHandler: function(key, upHandler) {
+            KEYS[this[key]].keyUp = upHandler;
         },
         isUp: function(key) {
-            return KEYS[key].isUp;
+            return !KEYS[KEY[key]].isDown;
         },
         isDown: function(key) {
-            return KEYS[key].isDown;
+            return KEYS[KEY[key]].isDown;
         }
     };
     window.addEventListener("keydown", function(e) {
         let key = KEYS[e.keyCode];
         if (key) {
             key.isDown = true;
-            key.isUp = false;
             e.preventDefault();
         }
     }, false);
@@ -38,7 +38,6 @@ var KEY = (function() {
         let key = KEYS[e.keyCode];
         if (key) {
             if (key.keyUp) key.keyUp();
-            key.isUp = true;
             key.isDown = false;
             e.preventDefault();
         }
@@ -46,17 +45,17 @@ var KEY = (function() {
 
     return obj;
 })();
-
 // Define keys
-KEY.add(KEY.w);
-KEY.add(KEY.a);
-KEY.add(KEY.s);
-KEY.add(KEY.d);
-KEY.add(KEY.up);
-KEY.add(KEY.down);
-KEY.add(KEY.right);
-KEY.add(KEY.left);
-KEY.add(KEY.e);
+KEY.add("w", 87);
+KEY.add("a", 65);
+KEY.add("s", 83);
+KEY.add("d", 68);
+KEY.add("up", 38);
+KEY.add("down", 40);
+KEY.add("right", 39);
+KEY.add("left", 37);
+KEY.add("e", 69);
+KEY.add("space", 32);
 
 function newText( text, callback=null, size=24, fill=0x000000, font="VT323") {
     let tmp = new PIXI.Text(text, {fontFamily: font, fontSize: size, fill: fill, align: "center"});

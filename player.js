@@ -10,10 +10,6 @@ function Player(x, y) {
     this.speed = .1;
     this.persfac = .8;
 
-    isDown = function(key) {
-        return KEY.isDown(KEY[key]);
-    }
-
     getPlayer = function(fname) {
         let t = getTexture(fname);
         let scalefactor = 0.8;
@@ -110,11 +106,11 @@ function Player(x, y) {
         this.sprite.position.set(this.pos.x, this.pos.y);
         let n = -1;
         let pos_before = this.pos.clone();
-        if (isDown("a")) {
+        if (KEY.isDown("a")) {
             this.pos.x -= deltaT * this.speed * GAME.scale.x;
             this.animstate -= 1;
             n = 3;
-        } else if (isDown("d")) {
+        } else if (KEY.isDown("d")) {
             this.pos.x += deltaT * this.speed * GAME.scale.x;
             this.animstate -= 1;
             n = 1;
@@ -133,11 +129,11 @@ function Player(x, y) {
         } else {
             pos_before = this.pos.clone();
         }
-        if (isDown("w")) {
+        if (KEY.isDown("w")) {
             this.pos.y -= deltaT * this.speed * this.persfac * GAME.scale.y;
             this.animstate -= 1;
             n = 0;
-        } else if (isDown("s")) {
+        } else if (KEY.isDown("s")) {
             this.pos.y += deltaT * this.speed * this.persfac * GAME.scale.y;
             this.animstate -= 1;
             n = 2;
