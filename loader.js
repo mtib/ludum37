@@ -27,6 +27,7 @@ var GAME = (function(){
             let h = Math.floor(rel);
             let m = Math.floor((rel-h)*60);
             if ( h < 0 ) {
+                GAME.switch_to(GAME.end);
                 return GAME.clock.setTime(0,0);
             }
             GAME.clock.setTime(h,m);
@@ -55,9 +56,13 @@ var GAME = (function(){
             }
         },
         headsup: newText("", null, 30, 0xFFFFFF),
+        gameVersion: 0,
         getBackY: function() { return backwall; },
         switch_to: function(newMode) {
+            this.gameVersion += 1;
+            guiStage.removeChildren();
             Coworker.coworkers = [];
+            counter = countermax;
             // destroying what needs to be destroyed
             DATA.stop_all();
             switch (this.mode) {
@@ -69,7 +74,6 @@ var GAME = (function(){
             // build what needs to be built
             switch (newMode) {
                 case this.menu:
-                    guiStage.removeChildren();
                     if (menuStage.children.length == 0) {
                         var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46, 0xFFFFFF);
                         var setting_btn = newText("Settings", null, 46, 0xFFFFFF);

@@ -183,10 +183,13 @@ Coworker = (function(){
         second_between: 3,
         generate_coworkers: function(wt) {
             for ( var i = 0; i < this.num_coworkers; i++ ) {
+                let current_game_version = GAME.gameVersion;
                 let nc = this.new(13);
                 setTimeout(function(){
-                    GAME.getCurrentStage().addChild(nc.sprite);
-                    Coworker.coworkers.push(nc);
+                    if ( GAME.gameVersion == current_game_version ) {
+                        GAME.getCurrentStage().addChild(nc.sprite);
+                        Coworker.coworkers.push(nc);
+                    }
                 },i*this.second_between*1000);
             }
         },
