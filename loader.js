@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 var renderer = new PIXI.autoDetectRenderer(WIDTH, HEIGHT, { antialias: false, roundPixels: true } );
 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 var divContainer = document.getElementById("container");
@@ -53,7 +55,7 @@ var GAME = (function(){
             return gobj;
         },
         pushGameObj: function(sprite) {
-            if ( this.getStage("GAME").children.length == 0 ) {
+            if ( this.getStage("GAME").children.length === 0 ) {
                 this.getStage("GAME").addChild(sprite);
                 return 0;
             } else {
@@ -64,7 +66,7 @@ var GAME = (function(){
                     }
                 }
                 this.getStage("GAME").addChild(sprite);
-                return this.getStage("GAME").children.length-1
+                return this.getStage("GAME").children.length-1;
             }
         },
         headsup: newText("", null, 30, 0xFFFFFF),
@@ -86,9 +88,9 @@ var GAME = (function(){
             // build what needs to be built
             switch (newMode) {
                 case this.menu:
-                    if (menuStage.children.length == 0) {
-                        var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game)}, 46, 0xFFFFFF);
-                        var setting_btn = newText("Settings", function(e){GAME.switch_to(GAME.conf)}, 46, 0xFFFFFF);
+                    if (menuStage.children.length === 0) {
+                        var start_btn = newText("Start", function(e){GAME.switch_to(GAME.game);}, 46, 0xFFFFFF);
+                        var setting_btn = newText("Settings", function(e){GAME.switch_to(GAME.conf);}, 46, 0xFFFFFF);
                         this.menuScore = newText("you don't have a highscore yet", null, 30, 0x666666);
                         explain = newText("try to hide from your coworkers, to 'skip' work\nbut stamp your card before the time runs out\n\n'?' - a coworker can hear you\n'??' - a coworker can smell you\n'!' - a coworker can see you", null, 30, 0x888888);
                         var bg = getTexture("menutitel");
@@ -124,11 +126,11 @@ var GAME = (function(){
                     this.headsup.style.dropShadowDistance = 2;
                     this.headsup.style.fill = 0xFFFFFF;
                     gobj = new PIXI.Graphics();
-                    var bg = getTexture("bg");
-                    bg.width = WIDTH;
-                    bg.height = HEIGHT;
-                    this.pushGameObj(bg);
-                    this.scale = {x: bg.scale.x, y: bg.scale.y};
+                    var game_bg = getTexture("bg");
+                    game_bg.width = WIDTH;
+                    game_bg.height = HEIGHT;
+                    this.pushGameObj(game_bg);
+                    this.scale = {x: game_bg.scale.x, y: game_bg.scale.y};
 
                     var door = getTexture("bossdoor");
                     door.position.y = backwall;
@@ -138,27 +140,27 @@ var GAME = (function(){
                     this.clock = {};
                     this.clock.hours = newText("", null, 20, 0x2EAA01);
                     this.clock.minutes = newText("", null, 20, 0x2EAA01);
-                    this.clock.hours.position.set(rtax(.649), rtay(.075));
-                    this.clock.minutes.position.set(rtax(.665), rtay(.075));
+                    this.clock.hours.position.set(rtax(0.649), rtay(0.075));
+                    this.clock.minutes.position.set(rtax(0.665), rtay(0.075));
 
                     this.clock.setTime = function(hours, minutes) {
                         this.time = hours*60+minutes;
                         this.hours.text = hours.toString();
                         this.minutes.text = ('0'+minutes).slice(-2);
-                    }
+                    };
                     this.clock.setTime(0, 0);
                     this.clock.add = function(minutes) {
                         this.time += minutes;
                         this.minutes.text = ('0'+this.time % 60).slice(-2);
                         this.hours.text = Math.floor(this.time/60).toString();
-                    }
+                    };
 
                     var ticket = getTexture("cardthing");
                     ticket.position.y = backwall + this.scale.y * 10;
                     ticket.position.x = door.position.x - this.scale.x * 80;
                     ticket.notice = function() {
                         GAME.resetTimer();
-                    }
+                    };
 
                     var shelf = getTexture("shelf");
                     shelf.position.y = backwall + this.scale.y * 12;
@@ -203,20 +205,20 @@ var GAME = (function(){
                     trash1.position.x = WIDTH - 20 * this.scale.x;
 
                     var trash2 = getTexture("trashcan");
-                    trash2.position.y = rtay(.48);
-                    trash2.position.x = rtax(.2);
+                    trash2.position.y = rtay(0.48);
+                    trash2.position.x = rtax(0.2);
 
                     var trash3 = getTexture("trashcan");
-                    trash3.position.y = rtay(.87);
-                    trash3.position.x = rtax(.625);
+                    trash3.position.y = rtay(0.87);
+                    trash3.position.x = rtax(0.625);
 
                     var chair1 = getTexture("chair1");
-                    chair1.position.x = rtax(.71);
-                    chair1.position.y = rtay(.586);
+                    chair1.position.x = rtax(0.71);
+                    chair1.position.y = rtay(0.586);
 
                     var chair2 = getTexture("chair2");
-                    chair2.position.x = rtax(.526);
-                    chair2.position.y = rtay(.586);
+                    chair2.position.x = rtax(0.526);
+                    chair2.position.y = rtay(0.586);
 
                     this.gameobjects = [
                         ticket, door, shelf, plant1, plant2,
@@ -250,20 +252,20 @@ var GAME = (function(){
                         GAME.gameobjects.push(t);
                     }
 
-                    newWall(rtax(.3),rtay(.48));
-                    newWall(rtax(.375),rtay(.65),false);
-                    newWall(rtax(.375),rtay(.8),false);
-                    newTable(.3,.57,true);
-                    newWall(rtax(.3),rtay(.8));
+                    newWall(rtax(0.3),rtay(0.48));
+                    newWall(rtax(0.375),rtay(0.65),false);
+                    newWall(rtax(0.375),rtay(0.8),false);
+                    newTable(0.3,0.57,true);
+                    newWall(rtax(0.3),rtay(0.8));
 
-                    newWall(rtax(.55),rtay(.48));
-                    newWall(rtax(.7),rtay(.48));
-                    newTable(.588,.66);
-                    newTable(.662,.66);
-                    newWall(rtax(.625),rtay(.65),false);
-                    newWall(rtax(.625),rtay(.8),false);
-                    newWall(rtax(.55),rtay(.8));
-                    newWall(rtax(.7),rtay(.8));
+                    newWall(rtax(0.55),rtay(0.48));
+                    newWall(rtax(0.7),rtay(0.48));
+                    newTable(0.588,0.66);
+                    newTable(0.662,0.66);
+                    newWall(rtax(0.625),rtay(0.65),false);
+                    newWall(rtax(0.625),rtay(0.8),false);
+                    newWall(rtax(0.55),rtay(0.8));
+                    newWall(rtax(0.7),rtay(0.8));
 
                     let borderbox_show = false;
                     for (var i in this.gameobjects) {
@@ -293,7 +295,7 @@ var GAME = (function(){
                             GAME.pushGameObj(b.sprite);
                         }
                     }, Coworker.num_coworkers * 1000 * Coworker.second_between + 2000);
-                    this.player = new Player(rtax(.3), rtay(.65));
+                    this.player = new Player(rtax(0.3), rtay(0.65));
                     this.player.postfix();
                     this.pushGameObj(this.player.sprite);
                     guiStage.addChild(this.clock.hours);
@@ -374,33 +376,33 @@ var GAME = (function(){
 
 // POINT LIST FOR PATH FINDING
 var pointlist = (function() {
-    let c1 = .128; // ✓
-    let c2 = .428; // ✓
-    let c3 = .852; // ✓
-    let r1 = .313; // ✓
-    let r2 = .594; // ✓
-    let r3 = .970; // ✓
+    let c1 = 0.128; // ✓
+    let c2 = 0.428; // ✓
+    let c3 = 0.852; // ✓
+    let r1 = 0.313; // ✓
+    let r2 = 0.594; // ✓
+    let r3 = 0.970; // ✓
     return [
-        POINTS.fromRel(c1-.05, r1), // 0 c1 top
+        POINTS.fromRel(c1-0.05, r1), // 0 c1 top
         POINTS.fromRel(c1, r2), // 1 c1 middle
-        POINTS.fromRel(c1-.05, r3), // 2 c1 bottom
+        POINTS.fromRel(c1-0.05, r3), // 2 c1 bottom
 
-        POINTS.fromRel(.27, r2+.05), // 3 q1
+        POINTS.fromRel(0.27, r2+0.05), // 3 q1
 
         POINTS.fromRel(c2, r1), // 4
         POINTS.fromRel(c2, r2), // 5
         POINTS.fromRel(c2, r3), // 6
 
-        POINTS.fromRel(c2+.1, r2+0.05), // 7 q2
+        POINTS.fromRel(c2+0.1, r2+0.05), // 7 q2
 
-        POINTS.fromRel(c3+.05, r1-.01), // 8
+        POINTS.fromRel(c3+0.05, r1-0.01), // 8
         POINTS.fromRel(c3, r2), // 9
         POINTS.fromRel(c3, r3), // 10
 
-        POINTS.fromRel(c3-.12, r2+0.05), // 11 q3
+        POINTS.fromRel(c3-0.12, r2+0.05), // 11 q3
 
-        POINTS.fromRel(.666,.26), // 12 ticket machine
-        POINTS.fromRel(.821,.226) // 13 door
+        POINTS.fromRel(0.666,0.26), // 12 ticket machine
+        POINTS.fromRel(0.821,0.226) // 13 door
     ];
 })();
 

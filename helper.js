@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 function cons( str ) {
     console.log( str );
 }
@@ -24,7 +26,7 @@ var KEY = (function() {
         setUpHandler: function(key, upHandler) {
             this[key].forEach(function(k) {
                 KEYS[k].keyUp = upHandler;
-            })
+            });
         },
         isUp: function(key) {
             return !KEYS[KEY[key][0]].isDown;
@@ -86,7 +88,7 @@ function rtay( ry ) {
 }
 
 function getTexture(name) {
-    return new PIXI.Sprite(PIXI.loader.resources[name].texture)
+    return new PIXI.Sprite(PIXI.loader.resources[name].texture);
 }
 
 POINTS = (function() {
@@ -98,29 +100,29 @@ POINTS = (function() {
         };
         this.length = function() {
             return Math.sqrt(Math.pow(this.x,2) + Math.pow(this.y,2));
-        }
+        };
         this.dist = function(p2) {
             return this.diff(p2).length();
-        }
+        };
         this.add = function(p2) {
             return new Point(this.x + p2.x, this.y + p2.y);
-        }
+        };
         this.clone = function() {
             return new Point(this.x, this.y);
-        }
+        };
         this.unit = function(l=1) {
             let x = this.x / this.length() * l;
             let y = this.y / this.length() * l;
             return new Point(x, y);
-        }
+        };
         this.dot = function(p2) {
             return this.x * p2.x + this.y * p2.y;
-        }
+        };
         this.mult = function(fact) {
             this.x *= fact;
             this.y *= fact;
             return this;
-        }
+        };
     }
     return {
         ZERO: new Point(0,0),
@@ -142,7 +144,7 @@ POINTS = (function() {
         fromPIXI: function(pp) {
             return new Point(pp.x, pp.y);
         }
-    }
+    };
 })();
 
 function getPossibleNext(index){

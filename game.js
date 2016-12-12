@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 // CONSTS
 // look into data.js for image file links
 
@@ -82,13 +84,13 @@ function gameUpdate() {
     }
 
     // updates the coworkers logic
-    for ( var i = 0; i < Coworker.coworkers.length; i++ ) {
+    for ( let i = 0; i < Coworker.coworkers.length; i++ ) {
         Coworker.coworkers[i].update();
     }
 
     // sorts objects by y-value
     // not stable
-    for ( var i = 1; i < GAME.getCurrentStage().children.length - 1; i++ ) {
+    for ( let i = 1; i < GAME.getCurrentStage().children.length - 1; i++ ) {
         let obj1 = GAME.getCurrentStage().getChildAt(i);
         let obj2 = GAME.getCurrentStage().getChildAt(i+1);
         if ( obj1.position.y > obj2.position.y ) {

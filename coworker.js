@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 // EVERYTHING NEEDED FOR COWORKERS:
 
 
@@ -30,7 +32,7 @@ Coworker = (function(){
                 t.scale.x = -1 * t.scale.x;
             }
             return t;
-        }
+        };
         this.sprites = [
             [this.getSpriteOf("B1"), this.getSpriteOf("B2")],
             [this.getSpriteOf("S1", true), this.getSpriteOf("S2", true)],
@@ -89,7 +91,7 @@ Coworker = (function(){
                 diff.x / diff.length() * deltaT * walkspeed,
                 diff.y / diff.length() * deltaT * walkspeed
             );
-        }
+        };
         this.waiting = -1;
         this.update = function() {
             this.updatePosition();
@@ -107,9 +109,8 @@ Coworker = (function(){
         };
         this.detectedPlayer = function() {
             this.overhead.text = "!!!";
-            GAME.switch_to(GAME.end, '\nYOU WERE CAUGHT BY '
-                + (this.appear=="boss"?'THE BOSS':'A COWORKER') + '!');
-        }
+            GAME.switch_to(GAME.end, '\nYOU WERE CAUGHT BY '+ (this.appear=="boss"?'THE BOSS':'A COWORKER') + '!');
+        };
         this.see = function() {
             let pd = this.position.diff(GAME.player.pos);
             let pdl = pd.length();
@@ -146,7 +147,7 @@ Coworker = (function(){
                     let diffl = diff.length();
 
                     for ( var i = 20; i < diffl; i+=20 ) {
-                        let p = {pos: this.position.add(unitc.clone().mult(i))}
+                        let p = {pos: this.position.add(unitc.clone().mult(i))};
                         for ( var j = 0; j < GAME.gameobjects.length; j++ ) {
                             if ( person_is_colliding_bb(p, GAME.gameobjects[j]) ) {
                                 return;
@@ -204,15 +205,16 @@ Coworker = (function(){
         num_coworkers: 6,
         second_between: 3,
         generate_coworkers: function(wt) {
+            let current_game_version = GAME.gameVersion;
+            addCoworker = function(){
+                if ( GAME.gameVersion == current_game_version ) {
+                    let nc = Coworker.new(13);
+                    GAME.getCurrentStage().addChild(nc.sprite);
+                    Coworker.coworkers.push(nc);
+                }
+            };
             for ( var i = 0; i < this.num_coworkers; i++ ) {
-                let current_game_version = GAME.gameVersion;
-                let nc = this.new(13);
-                setTimeout(function(){
-                    if ( GAME.gameVersion == current_game_version ) {
-                        GAME.getCurrentStage().addChild(nc.sprite);
-                        Coworker.coworkers.push(nc);
-                    }
-                },i*this.second_between*1000);
+                setTimeout(addCoworker,i*this.second_between*1000);
             }
         },
         new: function(spawn) {
@@ -221,5 +223,5 @@ Coworker = (function(){
         newBoss: function(spawn) {
             return new Walker("boss", spawn);
         }
-    }
+    };
 })();

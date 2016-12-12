@@ -1,10 +1,12 @@
+/* jshint esversion: 6 */
+
 function Player(x, y) {
     this.pos = POINTS.fromAbs(x, y);
     this.oob = function() {
         let px = 10 * GAME.scale.x;
         let py = 5 * GAME.scale.y;
         return (this.pos.x < px) || (this.pos.x > WIDTH-px) || (this.pos.y < GAME.getBackY()+py) || (this.pos.y > HEIGHT-py);
-    }
+    };
 
     this.isHiding = false;
 
@@ -19,7 +21,7 @@ function Player(x, y) {
         GAME.getCurrentStage().removeChild(GAME.toKill);
         GAME.pushGameObj(GAME.hideObj);
         return true;
-    }
+    };
     KEY.setUpHandler("space", function() {
         if (this.isHiding) {
             this.exitHidingPlace();
@@ -51,8 +53,8 @@ function Player(x, y) {
     }.bind(this));
 
     this.sprite = getTexture("heroF1");
-    this.speed = .1;
-    this.persfac = .8;
+    this.speed = 0.1;
+    this.persfac = 0.8;
 
     getPlayer = function(fname) {
         let t = getTexture(fname);
@@ -60,7 +62,7 @@ function Player(x, y) {
         t.scale.set(scalefactor * GAME.scale.x, scalefactor * GAME.scale.y);
         t.anchor.set(0.5,1);
         return t;
-    }
+    };
 
     this.downSprites = [
         getPlayer("heroF1"), getPlayer("heroF2")
@@ -82,7 +84,7 @@ function Player(x, y) {
         let scalefactor = 0.8;
         this.sprite.scale.set(scalefactor * GAME.scale.x, scalefactor * GAME.scale.y);
         this.sprite.anchor.set(0.5,1);
-    }
+    };
 
     this.show = this.downSprites;
     this.currentindex = 0;
@@ -92,15 +94,15 @@ function Player(x, y) {
 
     this.flip = function(undo = false) {
         if (undo) {
-            for (var i = 0; i < this.show.length; i++) {
+            for (let i = 0; i < this.show.length; i++) {
                 this.show[i].scale.x = Math.abs(this.show[i].scale.x);
             }
         } else {
-            for (var i = 0; i < this.show.length; i++) {
+            for (let i = 0; i < this.show.length; i++) {
                 this.show[i].scale.x = -1 * Math.abs(this.show[i].scale.x);
             }
         }
-    }
+    };
 
     this.switch_sprite_array = function(to) {
         GAME.getCurrentStage().removeChild(this.sprite);
@@ -127,7 +129,7 @@ function Player(x, y) {
         }
         GAME.pushGameObj(this.sprite);
         this.currentface = to;
-    }
+    };
 
     this.gbb = function(goi) {
         let g = new PIXI.Graphics();
@@ -135,7 +137,7 @@ function Player(x, y) {
         g.drawRect(goi.position.x-goi.width/2, goi.position.y-goi.height, goi.width, goi.height);
         GAME.getCurrentStage().addChild(g);
         setTimeout(function(){GAME.getCurrentStage().removeChild(g);},30);
-    }
+    };
 
     this.draw_colls = function() {
         let g = new PIXI.Graphics();
@@ -144,7 +146,7 @@ function Player(x, y) {
         g.lineStyle(5, 0x0000FF);
         g.drawCircle(this.pos.x, this.pos.y, 10);
         GAME.getCurrentStage().addChild(g);
-    }
+    };
 
     this.hud = new PIXI.Graphics();
     this.hidden_health = 100;
@@ -185,7 +187,7 @@ function Player(x, y) {
                 n = 2;
             }
             did_a_bad = false;
-            for ( var i = 0; i < GAME.gameobjects.length; i++ ) {
+            for ( let i = 0; i < GAME.gameobjects.length; i++ ) {
                 if (person_is_colliding_bb(this, GAME.gameobjects[i])) {
                     did_a_bad = true;
                     break;
@@ -221,12 +223,12 @@ function Player(x, y) {
             this.sprite = this.show[this.currentindex];
             GAME.pushGameObj(this.sprite);
         }
-        for ( var i = 0; i < this.allSprites.length; i++ ) {
+        for ( let i = 0; i < this.allSprites.length; i++ ) {
             for ( var j = 0; j < this.allSprites[i].length; j++) {
                 this.allSprites[i][j].position.set(this.pos.x, this.pos.y);
             }
         }
-    }
+    };
 }
 
 // checks whether hard coded points of interest of the

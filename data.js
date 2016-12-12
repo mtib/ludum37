@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 // CALLED BEFORE GAME, AFTER DATA/HELPER
 var WIDTH = 1280;
 var HEIGHT = 720;
@@ -42,10 +44,10 @@ var DATA = (function() {
             SOUNDS[name] = new Howl({
                 src: [sounds_prefix+file+'.ogg', sounds_prefix+file+'.mp3'],
                 volume: 0.4
-            })
+            });
         },
         get_sound: function(name) {
-            return SOUNDS[name]
+            return SOUNDS[name];
         },
         play_sound: function(name) {
             SOUNDS[name].play();
