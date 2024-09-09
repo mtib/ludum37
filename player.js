@@ -208,6 +208,13 @@ function Player(x, y) {
             // let maxhealth = 100; // 100%
             // let o = Math.PI * (0.5-health/maxhealth/2);
             let o = Math.PI * (0.5 - h.health/(2*maxhealth));
+            let { x, y } = getPointOnCircleFromRadians(
+                HCENTER,
+                VCENTER,
+                200,
+                Math.PI + o
+            );
+            GAME.gobj().moveTo(x, y);
             GAME.gobj().arc(HCENTER, VCENTER, 200, Math.PI+o, -o, false);
             h.health -= 0.02 * deltaT;
             if ( h.health <= 0 ) {
@@ -229,6 +236,13 @@ function Player(x, y) {
             }
         }
     };
+}
+
+function getPointOnCircleFromRadians(centerX, centerY, radius, angleInRadians) {
+    let x = centerX + radius * Math.cos(angleInRadians);
+    let y = centerY + radius * Math.sin(angleInRadians);
+
+    return { x: x, y: y };
 }
 
 // checks whether hard coded points of interest of the

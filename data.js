@@ -108,3 +108,11 @@ DATA.add_sound("NeedAir", "air");
 DATA.add_sound("explosion", "explosion");
 DATA.add_sound("notice", "notice");
 
+document.addEventListener("click", () => resumeHowler());
+document.addEventListener("keydown", () => resumeHowler());
+
+function resumeHowler() {
+    Howler.ctx.resume().then(() => {
+        console.log("AudioContext resumed successfully");
+    });
+}
